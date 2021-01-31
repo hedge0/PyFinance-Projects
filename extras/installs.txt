@@ -1,0 +1,26 @@
+#paste these commands into the command line to install specific python3 modules
+
+#numpy:
+pip3 install numpy
+
+#pandas/datareader:
+pip3 install pandas
+pip3 install pandas-datareader
+
+#matplotlib:
+pip3 install matplotlib
+
+#datetime:
+pip3 install DateTime
+
+#yfinance:
+pip3 install yfinance
+
+#statsmodels:
+pip3 install statsmodels
+
+#pykalman:
+pip3 install pykalman
+
+#quandl
+pip3 install Quandl
