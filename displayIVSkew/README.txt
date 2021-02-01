@@ -1,1 +1,1 @@
-wow
+Use this program to graph the IV skew of any option strike date. Use the IV skew to find the cheapest option within the same strike date chain. You must change the ticker to change the security for which the test is run on, as well as the strike date. Strike dates can be found using another program in PyFinance-Projects/getOptionDates/ called "getOptionDates.py". Run that to display all current strike dates, and input the desired strike into this program. (Use my installs in PyFinance-Projects/extras/ under "installs.txt" if you need to update or install any libraries)
