@@ -1,1 +1,1 @@
-wow
+This program can graph several secutities over a given timeframe, and is pretty basic. You must change the ticker to change the security for which the test is run on. (Use my installs in PyFinance-Projects/extras/ under "installs.txt" if you need to update or install any libraries)
