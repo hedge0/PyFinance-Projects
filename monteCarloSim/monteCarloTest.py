@@ -11,7 +11,7 @@ yf.pdr_override()
 
 #initial variables, including dates and ticker (ticker, startDate, and strikeDate need to be manually adjusted)
 endDate = date.today()
-startDate = endDate - datetime.timedelta(days = 50)
+startDate = endDate - datetime.timedelta(days = 180)
 ticker = 'SPY'
 strikeDate = '2021-02-05'
 
