@@ -1,14 +1,14 @@
-#tech stocks and indexes
+#tech securities
 techTickers = ['SMH', 'ARKK', 'XLK', 'QQQ', 'AAPL', 'MSFT', 'TSLA', 'FB', 'NVDA', 'PYPL', 'NFLX', 'INTC', 'CSCO', 'AVGO', 'ORCL', 'QCOM', 'AMD', 'UBER', 'SQ', 'SNAP', 'VMW', 'CRWD', 'U', 'PANW', 'RNG', 'SWKS', 'NET', 'EA']
 
-#large/liquid indexes
+#large/liquid securities
 indexTickers = ['SPY', 'QQQ', 'IWM', 'IVV', 'XLF', 'ARKK', 'XLK', 'VEA', 'SMH']
 
-#bank stocks and indexes
+#bank securities
 bankTickers = ['XLF', 'GS', 'JPM', 'BAC', 'C', 'WFC', 'MS', 'SCHW']
 
-#oil indexes
+#oil securities
 oilTickers = ['USL', 'USO', 'DBO', 'BNO']
 
-#metal indexes
+#metal securities
 metalTickers = ['SLV', 'GDX', 'GLD', 'IAU', 'GDXJ', 'GLDM', 'XME', 'SIVR', 'BAR', 'SIL', 'SLVP']
