@@ -11,7 +11,9 @@ yf.pdr_override()
 #initial variables, including dates and tickers (tickers and startDate need to be manually adjusted)
 endDate = date.today()
 startDate = endDate - datetime.timedelta(days = 365 * 1)
-tickers = ['SPY', 'SMH', 'ARKK', 'XLK', 'QQQ', 'AAPL', 'MSFT', 'TSLA', 'FB', 'NVDA', 'PYPL', 'NFLX', 'INTC', 'CSCO', 'AVGO', 'ORCL', 'QCOM', 'AMD', 'UBER', 'SQ', 'SNAP', 'VMW', 'CRWD', 'U', 'PANW', 'RNG', 'SWKS', 'NET', 'EA']
+payload = pd.read_html('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
+df = payload[0]
+tickers = df['Symbol'].values.tolist()
 
 #get price data for specified ticker
 data = pdr.get_data_yahoo(tickers, start = startDate, end = endDate)
