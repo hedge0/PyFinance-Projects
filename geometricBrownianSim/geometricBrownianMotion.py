@@ -13,7 +13,7 @@ yf.pdr_override()
 endDate = date.today()
 startDate = endDate - datetime.timedelta(days = 180)
 ticker = 'SPY'
-strikeDate = '2021-02-22'
+strikeDate = '2021-02-16'
 
 #get price data for specified ticker and calculate annual volatility from it
 prices = pdr.get_data_yahoo(ticker, start = startDate, end = endDate)
