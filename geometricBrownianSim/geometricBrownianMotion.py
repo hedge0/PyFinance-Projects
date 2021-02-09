@@ -6,6 +6,7 @@ from pandas_datareader import data as pdr
 import matplotlib.pyplot as plt
 import datetime
 from datetime import date
+from wallstreet import Stock
 import yfinance as yf
 yf.pdr_override()
 
@@ -24,7 +25,7 @@ prices['returns'] = (prices["Adj Close"] - prices["Adj Close"].shift(-1)) / pric
 futureDay = strikeDate
 numDays = np.busday_count(endDate, futureDay) + 1
 numRuns = 10000
-startPrice = prices["Adj Close"][0]
+startPrice = Stock(ticker).price
 dailyVol = np.std(prices.returns)
 annualDrift = (prices["Adj Close"][0] / prices["Adj Close"][-1]) - 1
 dailyDrift = annualDrift / len(prices["Adj Close"])
