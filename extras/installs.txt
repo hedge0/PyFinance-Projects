@@ -24,3 +24,6 @@ pip3 install pykalman
 
 #quandl
 pip3 install Quandl
+
+#wallstreet
+pip3 install wallstreet
