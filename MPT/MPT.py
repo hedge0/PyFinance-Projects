@@ -100,7 +100,7 @@ optimalPort = portfolios.iloc[((portfolios['Returns']-rf) / portfolios['Volatili
 newKeysList = optimalPort.keys()
 
 #print results and metrics
-print("\nPortfolio Size = " + str(portfolioSize))
+print("\nPortfolio Size = $" + str(portfolioSize))
 count = 0
 
 for key in newKeysList:
