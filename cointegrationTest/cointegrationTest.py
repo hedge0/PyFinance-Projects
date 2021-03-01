@@ -6,7 +6,6 @@ import datetime
 from datetime import date
 import statsmodels
 from statsmodels.tsa.stattools import coint
-from pykalman import KalmanFilter
 from math import sqrt
 import yfinance as yf
 yf.pdr_override()
