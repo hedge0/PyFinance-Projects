@@ -7,8 +7,7 @@ pip3 install numpy pandas pandas-datareader matplotlib DateTime statsmodels yfin
 pip3 install numpy
 
 #pandas/datareader:
-pip3 install pandas
-pip3 install pandas-datareader
+pip3 install pandas pandas-datareader
 
 #matplotlib:
 pip3 install matplotlib
