@@ -13,14 +13,17 @@ pip3 install matplotlib
 #datetime:
 pip3 install DateTime
 
-#yfinance:
-pip3 install yfinance
-
 #statsmodels:
 pip3 install statsmodels
+
+#yfinance:
+pip3 install yfinance
 
 #quandl
 pip3 install Quandl
 
 #wallstreet
 pip3 install wallstreet
+
+#install all dependencies at once:
+pip3 install numpy pandas pandas-datareader matplotlib DateTime statsmodels yfinance Quandl wallstreet
