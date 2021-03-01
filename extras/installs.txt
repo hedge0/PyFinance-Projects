@@ -19,9 +19,6 @@ pip3 install yfinance
 #statsmodels:
 pip3 install statsmodels
 
-#pykalman:
-pip3 install pykalman
-
 #quandl
 pip3 install Quandl
 
