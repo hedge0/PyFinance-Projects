@@ -76,27 +76,27 @@ print("Variance: " + str(round(variance, 2)))
 
 threeSigCall = mean + sigma * 3
 threeSigCallStrike = callsData.iloc[(callsData["strike"]-threeSigCall).abs().argsort()[:1]]
-print("3 σ+ strike: " + str(threeSigCallStrike["strike"].item()) + "   with call option price = " + str(callsData["lastPrice"].iloc[threeSigCallStrike["strike"].index.item()]))
+print("3*(+σ) strike: " + str(threeSigCallStrike["strike"].item()) + "   with call option price = " + str(callsData["lastPrice"].iloc[threeSigCallStrike["strike"].index.item()]))
 
 twoSigCall = mean + sigma * 2
 twoSigCallStrike = callsData.iloc[(callsData["strike"]-twoSigCall).abs().argsort()[:1]]
-print("2 σ+ strike: " + str(twoSigCallStrike["strike"].item()) + "   with call option price = " + str(callsData["lastPrice"].iloc[twoSigCallStrike["strike"].index.item()]))
+print("2*(+σ) strike: " + str(twoSigCallStrike["strike"].item()) + "   with call option price = " + str(callsData["lastPrice"].iloc[twoSigCallStrike["strike"].index.item()]))
 
 oneSigCall = mean + sigma
 oneSigCallStrike = callsData.iloc[(callsData["strike"]-oneSigCall).abs().argsort()[:1]]
-print("1 σ+ strike: " + str(oneSigCallStrike["strike"].item()) + "   with call option price = " + str(callsData["lastPrice"].iloc[oneSigCallStrike["strike"].index.item()]))
+print("1*(+σ) strike: " + str(oneSigCallStrike["strike"].item()) + "   with call option price = " + str(callsData["lastPrice"].iloc[oneSigCallStrike["strike"].index.item()]))
 
 oneSigPut = mean - sigma
 oneSigPutStrike = putsData.iloc[(putsData["strike"]-oneSigPut).abs().argsort()[:1]]
-print("1 σ- strike: " + str(oneSigPutStrike["strike"].item()) + "   with put option price = " + str(putsData["lastPrice"].iloc[oneSigPutStrike["strike"].index.item()]))
+print("1*(-σ) strike: " + str(oneSigPutStrike["strike"].item()) + "   with put option price = " + str(putsData["lastPrice"].iloc[oneSigPutStrike["strike"].index.item()]))
 
 twoSigPut = mean - sigma * 2
 twoSigPutStrike = putsData.iloc[(putsData["strike"]-twoSigPut).abs().argsort()[:1]]
-print("2 σ- strike: " + str(twoSigPutStrike["strike"].item()) + "   with put option price = " + str(putsData["lastPrice"].iloc[twoSigPutStrike["strike"].index.item()]))
+print("2*(-σ) strike: " + str(twoSigPutStrike["strike"].item()) + "   with put option price = " + str(putsData["lastPrice"].iloc[twoSigPutStrike["strike"].index.item()]))
 
 threeSigPut = mean - sigma * 3
 threeSigPutStrike = putsData.iloc[(putsData["strike"]-threeSigPut).abs().argsort()[:1]]
-print("3 σ- strike: " + str(threeSigPutStrike["strike"].item()) + "   with put option price = " + str(putsData["lastPrice"].iloc[threeSigPutStrike["strike"].index.item()]))
+print("3*(-σ) strike: " + str(threeSigPutStrike["strike"].item()) + "   with put option price = " + str(putsData["lastPrice"].iloc[threeSigPutStrike["strike"].index.item()]))
 
 #label and display graph for simulation
 plt.title(ticker)
