@@ -80,7 +80,7 @@ portWeights = []
 numAssets = len(prices.columns)
 numRuns = 10000
 
-#run covariance matrix with random weights to find maximum return on volatility portfolio
+#run random weights on covariance matrix to find maximum return on volatility portfolio
 for portfolio in range(numRuns):
 	weights = np.random.random(numAssets)
 	weights = weights / np.sum(weights)
