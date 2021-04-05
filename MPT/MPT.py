@@ -119,5 +119,6 @@ for key in newKeysList:
 		print(str(key) + " has a stock price of $" + str(currentPrice))
 		print("Buy " + str(sharesNum) + " shares of " + str(key))
 
-del data1
+del data
+del prices
 gc.collect()
