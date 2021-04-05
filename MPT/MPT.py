@@ -40,11 +40,10 @@ volList.append(['SPY', benchRatio])
 for key in keysList:
 	data = pdr.get_quote_yahoo(key)
 
-	if('trailingPE' in data.columns and 'forwardPE' in data.columns):
+	if('trailingPE' in data.columns):
 		pastPE = int(data['trailingPE'].item())
-		futurePE = int(data['forwardPE'].item())
 
-		if(pastPE > futurePE and pastPE > 15 and pastPE < 100):
+		if(pastPE > 15 and pastPE < 100):
 			vol = prices[key].pct_change().apply(lambda x: np.log(1+x))
 			dailyVol = np.std(vol)
 			annualVol = (dailyVol * math.sqrt(len(vol))) * 100
