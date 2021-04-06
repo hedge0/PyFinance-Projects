@@ -56,7 +56,7 @@ sigmaKelly = np.std(finalKelly)
 
 print("\nThe mean price after " + str(numRuns) + " Kelly bets is: " + str(round(meanKelly, 4)))
 print("Kelly betting has a standard deviation of: " + str(round(sigmaKelly, 4)))
-print(str(round((profitableKelly / len(finalKelly)) * 100, 4)) + "%" + " of Kelly betting was profitable")
+print(str(round((profitableKelly / len(finalKelly)) * 100, 4)) + "%" + " of Kelly random walks were profitable")
 
 for i in range(simRuns):
 	compAmount = []
@@ -84,4 +84,4 @@ sigmaComp = np.std(finalComp)
 
 print("\nThe mean price after " + str(numRuns) + " All-In bets is: " + str(round(meanComp, 4)))
 print("All-In betting has a standard deviation of: " + str(round(sigmaComp, 4)))
-print(str(round((profitableComp / len(finalComp)) * 100, 4)) + "%" + " of All-In betting was profitable")
+print(str(round((profitableComp / len(finalComp)) * 100, 4)) + "%" + " of All-In random walks were profitable")
