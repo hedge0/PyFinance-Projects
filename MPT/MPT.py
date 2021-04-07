@@ -79,8 +79,7 @@ for portfolio in range(numRuns):
 	weights = weights / np.sum(weights)
 	portWeights.append(weights)
 	portRet.append(np.dot(weights, yearlyReturns))
-	annualSD = np.sqrt(covMatrix.mul(weights, axis = 0).mul(weights, axis = 1).sum().sum()) * np.sqrt(252)
-	portVol.append(annualSD)
+	portVol.append(np.sqrt(covMatrix.mul(weights, axis = 0).mul(weights, axis = 1).sum().sum()) * np.sqrt(252))
 
 newData = {'Returns':portRet, 'Volatility':portVol}
 for counter, symbol in enumerate(prices.columns.tolist()):
