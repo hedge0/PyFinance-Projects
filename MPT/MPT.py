@@ -77,7 +77,7 @@ portRet = []
 portVol = [] 
 portWeights = []
 numAssets = len(prices.columns)
-numRuns = 10000
+numRuns = 100000
 
 #run random weights on covariance matrix to find maximum return on volatility portfolio
 for portfolio in range(numRuns):
@@ -116,4 +116,4 @@ for key in newKeysList:
 			count += 1
 		
 		print(str(key) + " has a stock price of $" + str(currentPrice))
-		print("Buy " + str(sharesNum) + " shares of " + str(key))
+		print("Buy " + str(sharesNum) + " shares of " + str(key) + " at " + str(round(optimalPort[key] * 100, 2)) + "%")
