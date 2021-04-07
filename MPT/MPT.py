@@ -86,9 +86,8 @@ for counter, symbol in enumerate(prices.columns.tolist()):
     newData[symbol] = [w[counter] for w in portWeights]
 
 #get results for ideal portfolio
-rf = 0.01
 portfolios = pd.DataFrame(newData)
-optimalPort = portfolios.iloc[((portfolios['Returns']-rf) / portfolios['Volatility']).idxmax()]
+optimalPort = portfolios.iloc[(portfolios['Returns'] / portfolios['Volatility']).idxmax()]
 newKeysList = optimalPort.keys()
 
 #print results and metrics
