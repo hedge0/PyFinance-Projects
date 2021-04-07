@@ -38,22 +38,16 @@ volList.append(['SPY', benchRatio])
 
 #calcuate specific values such as annual volatility and annual return
 for key in keysList:
-	data = pdr.get_quote_yahoo(key)
+	vol = prices[key].pct_change().apply(lambda x: np.log(1+x))
+	dailyVol = np.std(vol)
+	annualVol = (dailyVol * math.sqrt(len(vol))) * 100
 
-	if('trailingPE' in data.columns):
-		pastPE = int(data['trailingPE'].item())
+	if(annualVol < 75):
+		annualReturn = (np.log(prices[key][0]) - np.log(prices[key][-1])) * 100
+		ratio = annualReturn / annualVol
 
-		if(pastPE > 15 and pastPE < 100):
-			vol = prices[key].pct_change().apply(lambda x: np.log(1+x))
-			dailyVol = np.std(vol)
-			annualVol = (dailyVol * math.sqrt(len(vol))) * 100
-
-			if(annualVol < 75):
-				annualReturn = (np.log(prices[key][0]) - np.log(prices[key][-1])) * 100
-				ratio = annualReturn / annualVol
-
-				if(ratio > benchRatio):
-					volList.append([key, ratio])
+		if(ratio > benchRatio):
+			volList.append([key, ratio])
 
 #sort list by ratio
 sortedList = sorted(volList, key = itemgetter(1), reverse = True)
