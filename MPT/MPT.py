@@ -1,4 +1,3 @@
-import gc
 import math
 import numpy as np
 import pandas as pd
@@ -118,7 +117,3 @@ for key in newKeysList:
 		
 		print(str(key) + " has a stock price of $" + str(currentPrice))
 		print("Buy " + str(sharesNum) + " shares of " + str(key))
-
-del data
-del prices
-gc.collect()
