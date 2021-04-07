@@ -109,5 +109,6 @@ for key in newKeysList:
 			print("")
 			count += 1
 		
-		print(str(key) + " has a stock price of $" + str(currentPrice))
-		print("Buy " + str(sharesNum) + " shares of " + str(key) + " at " + str(round(optimalPort[key] * 100, 2)) + "%")
+		if(sharesNum > 0):
+			print(str(key) + " has a stock price of $" + str(currentPrice))
+			print("Buy " + str(sharesNum) + " shares of " + str(key) + " at " + str(round(optimalPort[key] * 100, 2)) + "%")
