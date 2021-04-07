@@ -81,13 +81,13 @@ for portfolio in range(numRuns):
 	portRet.append(np.dot(weights, yearlyReturns))
 	portVol.append(np.sqrt(covMatrix.mul(weights, axis = 0).mul(weights, axis = 1).sum().sum()) * np.sqrt(252))
 
-newData = {'Returns':portRet, 'Volatility':portVol}
+newData = {'Annualized Returns':portRet, 'Annualized Volatility':portVol}
 for counter, symbol in enumerate(prices.columns.tolist()):
     newData[symbol] = [w[counter] for w in portWeights]
 
 #get results for ideal portfolio
 portfolios = pd.DataFrame(newData)
-optimalPort = portfolios.iloc[(portfolios['Returns'] / portfolios['Volatility']).idxmax()]
+optimalPort = portfolios.iloc[(portfolios['Annualized Returns'] / portfolios['Annualized Volatility']).idxmax()]
 newKeysList = optimalPort.keys()
 
 #print results and metrics
