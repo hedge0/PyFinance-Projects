@@ -10,7 +10,6 @@ apiKey = ""
 
 #starting variables
 today = date.today()
-endDate = today
 startDate = "1999-01-01"
 
 #get yields data for 2 and 10 year
