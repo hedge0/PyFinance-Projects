@@ -10,10 +10,8 @@ import yfinance as yf
 yf.pdr_override()
 
 #set starting variables (only need to manuably set tickers)
-today = date.today()
-fiveYearsAgo = today - datetime.timedelta(days = 5 * 365)
-endDate = today
-startDate = fiveYearsAgo
+endDate = date.today()
+startDate = endDate - datetime.timedelta(days = 5 * 365)
 tickers = ['SMH', 'ARKK', 'XLK', 'QQQ', 'AAPL', 'MSFT', 'TSLA', 'ORCL', 'QCOM', 'AMD', 'UBER', 'SQ']
 
 #get data for each ticker
