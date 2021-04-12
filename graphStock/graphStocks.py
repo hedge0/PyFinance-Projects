@@ -6,10 +6,8 @@ from datetime import date
 import yfinance as yf
 yf.pdr_override()
 
-today = date.today()
-fiveYearsAgo = today - datetime.timedelta(days = 5 * 365)
-endDate = today
-startDate = fiveYearsAgo
+endDate = date.today()
+startDate = endDate - datetime.timedelta(days = 5 * 365)
 tickers = ['SPY', 'QQQ', 'IWM', 'IVV', 'XLF', 'ARKK', 'XLK', 'VEA', 'SMH']
 
 prices = pdr.get_data_yahoo(tickers, start = startDate, end = endDate)
