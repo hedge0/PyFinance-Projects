@@ -35,7 +35,13 @@ print("The mean VIX contango ratio is: " + str(round(mean, 4)) + " with StDev: "
 print("Upper Bound: " + str(round(upperBound, 4)))
 print("Lower Bound: " + str(round(lowerBound, 4)))
 
-ratio.plot(figsize=(20,10)).axhline(y = upperBound, color = "green", lw = 1)
-plt.axhline(y = lowerBound, color = "red", lw = 1)
-plt.title("Contango / Backwardation Ratio")
+fig, (ax1, ax2) = plt.subplots(2)
+
+ax1.plot(ratio.keys(), ratio)
+ax1.axhline(y = upperBound, color = "green", lw = 1)
+ax1.axhline(y = lowerBound, color = "red", lw = 1)
+ax1.axhline(y = mean, color = "black", lw = 1)
+ax1.set_title("Contango / Backwardation Ratio")
+ax2.plot(vixSpot.keys(), vixSpot)
+ax2.set_title("VIX Spot Price")
 plt.show()
