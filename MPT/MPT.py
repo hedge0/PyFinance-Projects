@@ -42,17 +42,24 @@ for key in keysList:
 	dailyVol = np.std(vol)
 	annualVol = (dailyVol * math.sqrt(len(vol))) * 100
 
-	if(annualVol < 75):
+	if(annualVol < 95):
 		annualReturn = (np.log(prices[key][0]) - np.log(prices[key][-1])) * 100
 		ratio = annualReturn / annualVol
 
 		if(ratio > benchRatio):
-			volList.append([key, ratio])
+			mCap = pdr.get_quote_yahoo(key)['marketCap']
+			mCap = round(mCap[0] / 1000000000, 2)
+			
+			if(mCap < 150):
+				volList.append([key, ratio, mCap])
 
 #sort list by ratio
 sortedList = sorted(volList, key = itemgetter(1), reverse = True)
 newTickers = []
 benchBool = False
+
+for item in sortedList:
+	print(item)
 
 #display results in order from best performing to worst performing securities by annual return adjusted by volatility
 for item in sortedList:
