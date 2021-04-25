@@ -1,7 +1,7 @@
 #enter these commands into the command line to install specific python3 modules
 
 #install all dependencies at once:
-pip3 install numpy pandas pandas-datareader matplotlib DateTime statsmodels yfinance Quandl wallstreet
+pip3 install numpy pandas pandas-datareader matplotlib DateTime statsmodels yfinance Quandl wallstreet pykalman
 
 #numpy:
 pip3 install numpy
