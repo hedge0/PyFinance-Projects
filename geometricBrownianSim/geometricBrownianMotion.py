@@ -10,11 +10,21 @@ from wallstreet import Stock
 import yfinance as yf
 yf.pdr_override()
 
+def strike(mean, sigma, multiplier, optionsChain, optionType):
+	if(optionType):
+		call = mean + (sigma * multiplier)
+		callStrike = optionsChain.iloc[(optionsChain["strike"]-call).abs().argsort()[:1]]
+		print(str(multiplier) + "*(+σ) strike: " + str(callStrike["strike"].item()) + "   with call option price = " + str(optionsChain["lastPrice"].iloc[callStrike["strike"].index.item()]))
+	else:
+		put = mean - (sigma * multiplier)
+		putStrike = optionsChain.iloc[(optionsChain["strike"]-put).abs().argsort()[:1]]
+		print(str(multiplier) + "*(-σ) strike: " + str(putStrike["strike"].item()) + "   with put option price = " + str(optionsChain["lastPrice"].iloc[putStrike["strike"].index.item()]))
+
 #initial variables, including dates and ticker (ticker, startDate, and strikeDate need to be manually adjusted)
 endDate = date.today()
 startDate = endDate - datetime.timedelta(days = 180)
 ticker = 'SPY'
-strikeDate = '2021-02-19'
+strikeDate = '2021-05-26'
 
 #get price data for specified ticker and calculate annual volatility from it
 prices = pdr.get_data_yahoo(ticker, start = startDate, end = endDate)
@@ -74,29 +84,14 @@ print("Mean: " + str(round(mean, 2)))
 print("StDev: " + str(round(sigma, 2)))
 print("Variance: " + str(round(variance, 2)))
 
-threeSigCall = mean + sigma * 3
-threeSigCallStrike = callsData.iloc[(callsData["strike"]-threeSigCall).abs().argsort()[:1]]
-print("3*(+σ) strike: " + str(threeSigCallStrike["strike"].item()) + "   with call option price = " + str(callsData["lastPrice"].iloc[threeSigCallStrike["strike"].index.item()]))
-
-twoSigCall = mean + sigma * 2
-twoSigCallStrike = callsData.iloc[(callsData["strike"]-twoSigCall).abs().argsort()[:1]]
-print("2*(+σ) strike: " + str(twoSigCallStrike["strike"].item()) + "   with call option price = " + str(callsData["lastPrice"].iloc[twoSigCallStrike["strike"].index.item()]))
-
-oneSigCall = mean + sigma
-oneSigCallStrike = callsData.iloc[(callsData["strike"]-oneSigCall).abs().argsort()[:1]]
-print("1*(+σ) strike: " + str(oneSigCallStrike["strike"].item()) + "   with call option price = " + str(callsData["lastPrice"].iloc[oneSigCallStrike["strike"].index.item()]))
-
-oneSigPut = mean - sigma
-oneSigPutStrike = putsData.iloc[(putsData["strike"]-oneSigPut).abs().argsort()[:1]]
-print("1*(-σ) strike: " + str(oneSigPutStrike["strike"].item()) + "   with put option price = " + str(putsData["lastPrice"].iloc[oneSigPutStrike["strike"].index.item()]))
-
-twoSigPut = mean - sigma * 2
-twoSigPutStrike = putsData.iloc[(putsData["strike"]-twoSigPut).abs().argsort()[:1]]
-print("2*(-σ) strike: " + str(twoSigPutStrike["strike"].item()) + "   with put option price = " + str(putsData["lastPrice"].iloc[twoSigPutStrike["strike"].index.item()]))
-
-threeSigPut = mean - sigma * 3
-threeSigPutStrike = putsData.iloc[(putsData["strike"]-threeSigPut).abs().argsort()[:1]]
-print("3*(-σ) strike: " + str(threeSigPutStrike["strike"].item()) + "   with put option price = " + str(putsData["lastPrice"].iloc[threeSigPutStrike["strike"].index.item()]))
+strike(mean, sigma, 3, callsData, True)
+strike(mean, sigma, 2, callsData, True)
+strike(mean, sigma, 1, callsData, True)
+strike(mean, sigma, 0, callsData, True)
+strike(mean, sigma, 0, putsData, False)
+strike(mean, sigma, 1, putsData, False)
+strike(mean, sigma, 2, putsData, False)
+strike(mean, sigma, 3, putsData, False)
 
 #label and display graph for simulation
 plt.title(ticker)
