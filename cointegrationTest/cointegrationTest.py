@@ -22,7 +22,7 @@ prices = data["Adj Close"].dropna(axis='columns')
 keysList = prices.keys()
 keySize = len(keysList)
 uniquePairs = (keySize * (keySize - 1)) / 2
-pValMax = 0.05
+pValMax = 0.5
 pairsList = []
 
 print("\n" + str(keySize) + " tickers span a valid backtest with " + str(int(uniquePairs)) + " possible pair(s).")
