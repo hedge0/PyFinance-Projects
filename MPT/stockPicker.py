@@ -47,7 +47,7 @@ for key in keysList:
 			mCap = pdr.get_quote_yahoo(key)['marketCap']
 			mCap = round(mCap[0] / 1000000000, 2)
 			
-			if(mCap < 150):
+			if(mCap < 3000):
 				volList.append([key, ratio, mCap])
 
 #sort list by ratio
