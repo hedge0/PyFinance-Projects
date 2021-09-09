@@ -25,6 +25,7 @@ vixFront = vixFrontData["Settle"]
 vixSecondData = quandl.get('CHRIS/CBOE_VX2', trim_start = startDate, trim_end = endDate, authtoken = apiKey)
 vixSecond = vixSecondData["Settle"]
 
+#create ratio for vix 
 ratio = ((vixSpot / vixFront) * 0.7) + ((vixFront / vixSecond) * 0.3) - 1
 mean = np.mean(ratio)
 std = np.std(ratio)
@@ -35,8 +36,8 @@ print("The mean VIX contango ratio is: " + str(round(mean, 4)) + " with StDev: "
 print("Upper Bound: " + str(round(upperBound, 4)))
 print("Lower Bound: " + str(round(lowerBound, 4)))
 
+#plot results via matplotlib
 fig, (ax1, ax2) = plt.subplots(2)
-
 ax1.plot(ratio.keys(), ratio)
 ax1.axhline(y = upperBound, color = "green", lw = 1)
 ax1.axhline(y = lowerBound, color = "red", lw = 1)
