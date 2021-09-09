@@ -11,6 +11,7 @@ yf.pdr_override()
 ticker = 'SPY'
 strikeDate = '2021-02-05'
 
+#get data from api
 priceData = yf.Ticker(ticker)
 optionData = priceData.option_chain(strikeDate)
 callsData = optionData.calls
@@ -19,10 +20,12 @@ putsData = optionData.puts
 sortedCallsData = callsData.sort_values(by=["impliedVolatility"])
 sortedPutsData = putsData.sort_values(by=["impliedVolatility"])
 
+#display lowest IV amongst all stikes
 print("Lowest IV among " + str(ticker) + " " + str(strikeDate) + " options:")
 print("Call strike with lowest IV: " + str(sortedCallsData["strike"].head(1).item()) + " with IV = " + str(sortedCallsData["impliedVolatility"].head(1).item() * 100))
 print("Put strike with lowest IV:  " + str(sortedPutsData["strike"].head(1).item()) + " with IV = " + str(sortedPutsData["impliedVolatility"].head(1).item() * 100))
 
+#plot IV skew via matplotlib
 fig, axs = plt.subplots(2)
 fig.suptitle("Volatility Skew for " + str(ticker) + " " + str(strikeDate))
 axs[0].plot(callsData["strike"], callsData["impliedVolatility"]*100)
