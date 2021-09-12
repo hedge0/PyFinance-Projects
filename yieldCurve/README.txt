@@ -1,1 +1,0 @@
-This program displays the 2-10 year yield curve, which is predictive of recessions. The program also prints optimal times to hedge a portfilio against possible recessions (Use my installs in PyFinance-Projects/extras/ under "installs.txt" if you need to update or install any libraries)
