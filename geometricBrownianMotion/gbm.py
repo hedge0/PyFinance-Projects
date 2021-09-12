@@ -1,12 +1,10 @@
-import math
+import sys
 import random
 import numpy as np
-import pandas as pd
 from pandas_datareader import data as pdr
 import matplotlib.pyplot as plt
 import datetime
 from datetime import date
-from wallstreet import Stock
 import yfinance as yf
 yf.pdr_override()
 
@@ -14,17 +12,33 @@ def strike(mean, sigma, multiplier, optionsChain, optionType):
 	if(optionType):
 		call = mean + (sigma * multiplier)
 		callStrike = optionsChain.iloc[(optionsChain["strike"]-call).abs().argsort()[:1]]
-		print(str(multiplier) + "*(+σ) strike: " + str(callStrike["strike"].item()) + "   with call option price = " + str(optionsChain["lastPrice"].iloc[callStrike["strike"].index.item()]))
+		print("+" + str(multiplier) + "σ Strike: " + str(callStrike["strike"].item()) + " Call Price: " + str(optionsChain["lastPrice"].iloc[callStrike["strike"].index.item()]))
 	else:
 		put = mean - (sigma * multiplier)
 		putStrike = optionsChain.iloc[(optionsChain["strike"]-put).abs().argsort()[:1]]
-		print(str(multiplier) + "*(-σ) strike: " + str(putStrike["strike"].item()) + "   with put option price = " + str(optionsChain["lastPrice"].iloc[putStrike["strike"].index.item()]))
+		print("-" + str(multiplier) + "σ Strike: " + str(putStrike["strike"].item()) + " Put Price: " + str(optionsChain["lastPrice"].iloc[putStrike["strike"].index.item()]))
+
+def getTicker():
+    ticker = input("Enter your Ticker: ")
+    data = yf.Ticker(ticker)
+    if not data.options:
+        sys.exit("Invalid Ticker")
+    return ticker, data
+
+def getDate(dates):
+    for date in dates:
+	    print(date)
+    date = input("Enter your Expiration Date: ")
+    if date not in dates:
+	    sys.exit("Invalid Date")
+    return date
 
 #initial variables, including dates and ticker (ticker, startDate, and strikeDate need to be manually adjusted)
 endDate = date.today()
 startDate = endDate - datetime.timedelta(days = 180)
-ticker = 'SPY'
-strikeDate = '2021-05-26'
+ticker, data = getTicker()
+dates = data.options
+strikeDate = getDate(dates)
 
 #get price data for specified ticker and calculate annual volatility from it
 prices = pdr.get_data_yahoo(ticker, start = startDate, end = endDate)
@@ -32,29 +46,27 @@ prices.sort_index(ascending=False, inplace=True)
 prices['returns'] = prices["Adj Close"].pct_change().apply(lambda x: np.log(1+x))
 
 #variables for simulation
-futureDay = strikeDate
-numDays = np.busday_count(endDate, futureDay) + 1
+numDays = np.busday_count(endDate, strikeDate) + 1
 numRuns = 10000
-startPrice = Stock(ticker).price
+startPrice = data.info['regularMarketPrice']
 dailyVol = np.std(prices.returns)
 annualDrift = np.log(prices["Adj Close"][0]) - np.log(prices["Adj Close"][-1])
 dailyDrift = annualDrift / len(prices["Adj Close"])
 dailyDriftMean = dailyDrift - (0.5 * dailyVol * dailyVol)
 
 #get price data for options
-priceData = yf.Ticker(ticker)
-optionData = priceData.option_chain(futureDay)
+optionData = data.option_chain(strikeDate)
 callsData = optionData.calls
 putsData = optionData.puts
 
 #display simulation variables
 print("Simulation Variables for " + str(ticker) + ":")
-print("Strike date: " + str(futureDay))
-print("Days till expiry: " + str(numDays))
+print("Strike Date: " + str(strikeDate))
+print("Days till Expiry: " + str(numDays))
 print("Runs: " + str(numRuns))
-print("Start price: " + str(round(startPrice, 2)))
-print("Daily volatility: " + str(round(dailyVol, 6)))
-print("Daily drift: " + str(round(dailyDriftMean, 6)), end = '\n\n\n')
+print("Start Price: " + str(round(startPrice, 2)))
+print("Daily Volatility: " + str(round(dailyVol, 6)))
+print("Daily Drift: " + str(round(dailyDriftMean, 6)), end = '\n\n')
 
 #create 2d array of random daily volatility values and insert starting price
 np.random.seed(random.randint(1, 10))
@@ -79,10 +91,10 @@ sigma = np.std(finalPrices)
 variance = np.var(finalPrices) 
 
 #display metrics, plus option values
-print("StDev Distribution of strikes and metrics:")
-print("Mean: " + str(round(mean, 2)))
-print("StDev: " + str(round(sigma, 2)))
-print("Variance: " + str(round(variance, 2)))
+print("Normal Distribution of Strikes and Metrics:")
+print("μ: " + str(round(mean, 2)))
+print("σ: " + str(round(sigma, 2)))
+print("σ2: " + str(round(variance, 2)))
 
 strike(mean, sigma, 3, callsData, True)
 strike(mean, sigma, 2, callsData, True)
