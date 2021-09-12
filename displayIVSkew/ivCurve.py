@@ -1,33 +1,33 @@
-import numpy as np
-import pandas as pd
-from pandas_datareader import data as pdr
+import sys
 import matplotlib.pyplot as plt
-import datetime
-from datetime import date
 import yfinance as yf
 yf.pdr_override()
 
-#change strike date and ticker to adjust test
-ticker = 'SPY'
-strikeDate = '2021-02-05'
+def getTicker():
+    ticker = input("Enter your Ticker: ")
+    data = yf.Ticker(ticker)
+    if not data.options:
+        sys.exit("Invalid Ticker")
+    return ticker, data
 
-#get data from api
-priceData = yf.Ticker(ticker)
-optionData = priceData.option_chain(strikeDate)
+def getDate(dates):
+    for date in dates:
+	    print(date)
+    date = input("Enter your Expiration Date: ")
+    if date not in dates:
+	    sys.exit("Invalid Date")
+    return date
+
+ticker, data = getTicker()
+dates = data.options
+date = getDate(dates)
+optionData = data.option_chain(date)
 callsData = optionData.calls
 putsData = optionData.puts
 
-sortedCallsData = callsData.sort_values(by=["impliedVolatility"])
-sortedPutsData = putsData.sort_values(by=["impliedVolatility"])
-
-#display lowest IV amongst all stikes
-print("Lowest IV among " + str(ticker) + " " + str(strikeDate) + " options:")
-print("Call strike with lowest IV: " + str(sortedCallsData["strike"].head(1).item()) + " with IV = " + str(sortedCallsData["impliedVolatility"].head(1).item() * 100))
-print("Put strike with lowest IV:  " + str(sortedPutsData["strike"].head(1).item()) + " with IV = " + str(sortedPutsData["impliedVolatility"].head(1).item() * 100))
-
 #plot IV skew via matplotlib
 fig, axs = plt.subplots(2)
-fig.suptitle("Volatility Skew for " + str(ticker) + " " + str(strikeDate))
+fig.suptitle("Volatility Skew for " + str(ticker) + " " + str(date))
 axs[0].plot(callsData["strike"], callsData["impliedVolatility"]*100)
 axs[0].set_title("IV on calls")
 axs[1].plot(putsData["strike"], putsData["impliedVolatility"]*100)

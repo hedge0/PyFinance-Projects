@@ -1,1 +1,0 @@
-Run this program to get option strike dates. You can pick one of the dates for use in some of my other projects that involve options. You must change the ticker to change the security for which the test is run on. (Use my installs in PyFinance-Projects/extras/ under "installs.txt" if you need to update or install any libraries)
