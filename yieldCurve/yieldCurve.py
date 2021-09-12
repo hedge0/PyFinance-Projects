@@ -32,7 +32,6 @@ for i in range(keySize):
 		notInverted = True
 		inverted = False
 		plt.scatter(keysList[i], yields[keysList[i]] + 0.01, label='skitscat', color='red', s=25, marker="v")
-		print("Sell: " + str(keysList[i]))
 
 #title and plot graph
 yields.plot(figsize=(20,10)).axhline(y = 0, color = "black", lw = 1)
