@@ -1,7 +1,4 @@
-import pandas as pd
-from pandas_datareader import data as pdr
 import matplotlib.pyplot as plt
-import datetime
 from datetime import date
 import quandl
 

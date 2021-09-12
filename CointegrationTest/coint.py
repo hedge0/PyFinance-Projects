@@ -1,10 +1,8 @@
 import numpy as np
-import pandas as pd
 from pandas_datareader import data as pdr
 import datetime
 from datetime import date
 from operator import itemgetter
-import statsmodels
 from statsmodels.tsa.stattools import coint
 import yfinance as yf
 yf.pdr_override()
