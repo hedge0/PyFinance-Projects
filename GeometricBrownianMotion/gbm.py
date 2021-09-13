@@ -8,6 +8,7 @@ from datetime import date
 import yfinance as yf
 yf.pdr_override()
 
+#produce stats for given strike
 def strike(mean, sigma, multiplier, optionsChain, optionType):
 	if(optionType):
 		call = mean + (sigma * multiplier)
@@ -18,6 +19,7 @@ def strike(mean, sigma, multiplier, optionsChain, optionType):
 		putStrike = optionsChain.iloc[(optionsChain["strike"]-put).abs().argsort()[:1]]
 		print("-" + str(multiplier) + "σ Strike: " + str(putStrike["strike"].item()) + " Put Price: " + str(optionsChain["lastPrice"].iloc[putStrike["strike"].index.item()]))
 
+#get ticker from user
 def getTicker():
     ticker = input("Enter your Ticker: ")
     data = yf.Ticker(ticker)
@@ -25,6 +27,7 @@ def getTicker():
         sys.exit("Invalid Ticker")
     return ticker, data
 
+#get date from user
 def getDate(dates):
     for date in dates:
 	    print(date)
