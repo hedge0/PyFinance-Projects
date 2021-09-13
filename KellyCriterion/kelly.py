@@ -54,7 +54,7 @@ def getStats(results):
 	sigma = np.std(results)
 	return mean, sigma
 
-#computes new value using kelly bet
+#compute new value using kelly bet
 def kellyVal(probability, reward, risk, kelly, prev):
 	if random.random() < probability:
 		kellyVal = (kelly * prev) * (1 + reward)
@@ -66,7 +66,7 @@ def kellyVal(probability, reward, risk, kelly, prev):
 		totalVal = kellyVal + otherVal
 	return totalVal
 
-#computes new value using full bet
+#compute new value using full bet
 def fullVal(probability, reward, risk, prev):
 	if random.random() < probability:
 		totalVal = prev * (1 + reward)
@@ -74,7 +74,7 @@ def fullVal(probability, reward, risk, prev):
 		totalVal = prev * (1 - risk)
 	return totalVal
 
-#runs simulation equal to number of random walks
+#run simulation equal to number of random walks
 def monteCarlo(probability, reward, risk, walks, runs, kelly = 0):
 	results = []
 	for i in range(walks):
@@ -89,7 +89,7 @@ def monteCarlo(probability, reward, risk, walks, runs, kelly = 0):
 		results.append(randomWalk[-1])
 	return results
 
-#gets percent of random walks that were profitable
+#get percent of random walks that were profitable
 def getProfitableWalks(results):
 	count = 0
 	for value in results:
@@ -98,7 +98,7 @@ def getProfitableWalks(results):
 	prof = (count / len(results))
 	return prof
 
-#gets inputs to run simulation and print results
+#get inputs to run simulation and print results
 def runSim(probability, reward, risk, walks, runs, kelly = 0):
 	if kelly > 0:
 		bet = "Kelly"
