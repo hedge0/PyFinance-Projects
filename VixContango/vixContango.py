@@ -17,10 +17,8 @@ startDate = endDate - datetime.timedelta(days = 5 * 365)
 #retrieve data
 vixSpotData = pdr.get_data_yahoo('^VIX', start = startDate, end = endDate)
 vixSpot = vixSpotData["Adj Close"]
-
 vixFrontData = quandl.get('CHRIS/CBOE_VX1', trim_start = startDate, trim_end = endDate, authtoken = apiKey)
 vixFront = vixFrontData["Settle"]
-
 vixSecondData = quandl.get('CHRIS/CBOE_VX2', trim_start = startDate, trim_end = endDate, authtoken = apiKey)
 vixSecond = vixSecondData["Settle"]
 

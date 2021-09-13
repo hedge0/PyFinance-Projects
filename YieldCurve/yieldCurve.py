@@ -28,7 +28,7 @@ for i in range(keySize):
 	if(not notInverted and inverted and (yields[keysList[i]] > 0.25)):
 		notInverted = True
 		inverted = False
-		plt.scatter(keysList[i], yields[keysList[i]] + 0.01, label='skitscat', color='red', s=25, marker="v")
+		plt.scatter(keysList[i], yields[keysList[i]] + 0.01, label = 'skitscat', color = 'red', s=25, marker = "v")
 
 #title and plot graph
 yields.plot(figsize=(20,10)).axhline(y = 0, color = "black", lw = 1)
