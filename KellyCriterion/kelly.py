@@ -1,87 +1,115 @@
+import sys
 import random
 import numpy as np
 
-#enter values here for criterion
-winProbability = 0.85
-#if 25 cents won per dollar bet, enter 0.25
-winAmount = 0.1
-#if 25 cents lost per dollar bet, enter 0.25
-lossAmount = 0.5
-numRuns = 100
+def checkFloat(val):
+	try:
+		float(val)
+	except ValueError:
+		sys.exit("Not a Float")
 
-riskRewardRatio = winAmount / lossAmount
-kelly = winProbability - ((1 - winProbability) / riskRewardRatio)
-print("Win Probability: " + str(winProbability * 100) + "%")
-print("Risk / Reward Ratio: " + str(round(riskRewardRatio, 4)))
-print("Optimal percent recommended by Kelly Criterion: " + str(round(kelly, 4) * 100) + "%")
+def checkInt(val):
+	try:
+		int(val)
+	except ValueError:
+		sys.exit("Not an Int")
 
-if(kelly <= 0):
-	print("Kelly Criterion has suggested a betting size less than or equal to 0, and thus the bet should not be taken")
-	exit()
+def getProbability():
+	probability = input("Enter the Expected Probability of Winning: ")
+	checkFloat(probability)
+	probability = float(probability)
+	return probability
 
-simRuns = 10000
-startingAmount = 1
-finalKelly = []
-finalComp = []
+def getRatio():
+	reward = input("Enter the Potential Reward: ")
+	checkFloat(reward)
+	reward = float(reward)
+	risk = input("Enter the Potential Risk: ")
+	checkFloat(risk)
+	risk = float(risk)
+	ratio = reward / risk
+	return reward, risk, ratio
 
-print("\nMonte Carlo Simulation of " + str(simRuns) + " Runs:")
+def getRuns():
+	runs = input("Enter the Number of Consecutive Bets: ")
+	checkInt(runs)
+	runs = int(runs)
+	return runs
 
-for i in range(simRuns):
-	simAmount = []
-	simAmount.append(startingAmount)
+def getKelly(probability, ratio):
+	kelly = probability - ((1 - probability) / ratio)
+	if(kelly <= 0):
+		sys.exit("Suggested betting size is less than or equal to 0 and should not be taken")
+	return kelly
 
-	for i in range(1, numRuns + 1):
-		lastAmount = simAmount[i-1]
+def getStats(results):
+	mean = np.mean(results) 
+	sigma = np.std(results)
+	return mean, sigma
 
-		if random.random() < winProbability:
-			kellyVal = (kelly * lastAmount) * (1 + winAmount)
-			otherVal = (1 - kelly) * lastAmount
-			totalVal = kellyVal + otherVal
-			simAmount.append(totalVal)
-		else:
-			kellyVal = (kelly * lastAmount) * (1 - lossAmount)
-			otherVal = (1 - kelly) * lastAmount
-			totalVal = kellyVal + otherVal
-			simAmount.append(totalVal)
-	finalKelly.append(simAmount[-1])
+def kellyVal(probability, reward, risk, kelly, prev):
+	if random.random() < probability:
+		kellyVal = (kelly * prev) * (1 + reward)
+		otherVal = (1 - kelly) * prev
+		totalVal = kellyVal + otherVal
+	else:
+		kellyVal = (kelly * prev) * (1 - risk)
+		otherVal = (1 - kelly) * prev
+		totalVal = kellyVal + otherVal
+	return totalVal
 
-profitableKelly = 0
+def fullVal(probability, reward, risk, prev):
+	if random.random() < probability:
+		totalVal = prev * (1 + reward)
+	else:
+		totalVal = prev * (1 - risk)
+	return totalVal
 
-for value in finalKelly:
-	if value > startingAmount:
-		profitableKelly += 1
+def monteCarlo(probability, reward, risk, walks, runs, kelly = 0):
+	results = []
+	for i in range(walks):
+		randomWalk = []
+		randomWalk.append(1)
+		for i in range(1, runs + 1):
+			prev = randomWalk[i-1]
+			if kelly > 0:
+				randomWalk.append(kellyVal(probability, reward, risk, kelly, prev))
+			else:
+				randomWalk.append(fullVal(probability, reward, risk, prev))
+		results.append(randomWalk[-1])
+	return results
 
-meanKelly = np.mean(finalKelly) 
-sigmaKelly = np.std(finalKelly) 
+def getProfitableWalks(results):
+	count = 0
+	for value in results:
+		if value > 1:
+			count += 1
+	prof = (count / len(results))
+	return prof
 
-print("\nThe mean price after " + str(numRuns) + " Kelly bets is: " + str(round(meanKelly, 4)))
-print("Kelly betting has a standard deviation of: " + str(round(sigmaKelly, 4)))
-print(str(round((profitableKelly / len(finalKelly)) * 100, 4)) + "%" + " of Kelly random walks were profitable")
+def runSim(probability, reward, risk, walks, runs, kelly = 0):
+	if kelly > 0:
+		bet = "Kelly"
+	else:
+		bet = "All-In"
 
-for i in range(simRuns):
-	compAmount = []
-	compAmount.append(startingAmount)
+	results = monteCarlo(probability, reward, risk, walks, runs, kelly)
+	prof = getProfitableWalks(results)
+	mean, sigma = getStats(results)
 
-	for i in range(1, numRuns + 1):
-		lastAmount = compAmount[i-1]
+	print("\n" + bet + " μ: " + str(round(mean, 4)))
+	print(bet + " σ: " + str(round(sigma, 4)))
+	print(str(round(prof * 100, 4)) + "%" + " Profitable Walks")
 
-		if random.random() < winProbability:
-			totalVal = lastAmount * (1 + winAmount)
-			compAmount.append(totalVal)
-		else:
-			totalVal = lastAmount * (1 - lossAmount)
-			compAmount.append(totalVal)
-	finalComp.append(compAmount[-1])
+probability = getProbability()
+reward, risk, ratio = getRatio()
+runs = getRuns()
+walks = 10000
+kelly = getKelly(probability, ratio)
 
-profitableComp = 0
+print("\nWin Probability: " + str(probability * 100) + "%")
+print("Risk Reward Ratio: " + str(round(ratio, 4)))
+print("Optimal Kelly Size: " + str(round(kelly, 4) * 100) + "%")
 
-for value in finalComp:
-	if value > startingAmount:
-		profitableComp += 1
-
-meanComp = np.mean(finalComp) 
-sigmaComp = np.std(finalComp) 
-
-print("\nThe mean price after " + str(numRuns) + " All-In bets is: " + str(round(meanComp, 4)))
-print("All-In betting has a standard deviation of: " + str(round(sigmaComp, 4)))
-print(str(round((profitableComp / len(finalComp)) * 100, 4)) + "%" + " of All-In random walks were profitable")
+runSim(probability, reward, risk, walks, runs, kelly)
+runSim(probability, reward, risk, walks, runs)
