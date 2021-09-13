@@ -2,24 +2,28 @@ import sys
 import random
 import numpy as np
 
+#check that string can be converted to float
 def checkFloat(val):
 	try:
 		float(val)
 	except ValueError:
 		sys.exit("Not a Float")
 
+#check that string can be converted to int
 def checkInt(val):
 	try:
 		int(val)
 	except ValueError:
 		sys.exit("Not an Int")
 
+#get probability of winning from user
 def getProbability():
 	probability = input("Enter the Expected Probability of Winning: ")
 	checkFloat(probability)
 	probability = float(probability)
 	return probability
 
+#get win loss ratio from user
 def getRatio():
 	reward = input("Enter the Potential Reward: ")
 	checkFloat(reward)
@@ -30,23 +34,27 @@ def getRatio():
 	ratio = reward / risk
 	return reward, risk, ratio
 
+#get number of consecutive bets from user
 def getRuns():
 	runs = input("Enter the Number of Consecutive Bets: ")
 	checkInt(runs)
 	runs = int(runs)
 	return runs
 
+#get kelly size from formula
 def getKelly(probability, ratio):
 	kelly = probability - ((1 - probability) / ratio)
 	if(kelly <= 0):
 		sys.exit("Suggested betting size is less than or equal to 0 and should not be taken")
 	return kelly
 
+#get stats from results
 def getStats(results):
 	mean = np.mean(results) 
 	sigma = np.std(results)
 	return mean, sigma
 
+#computes new value using kelly bet
 def kellyVal(probability, reward, risk, kelly, prev):
 	if random.random() < probability:
 		kellyVal = (kelly * prev) * (1 + reward)
@@ -58,6 +66,7 @@ def kellyVal(probability, reward, risk, kelly, prev):
 		totalVal = kellyVal + otherVal
 	return totalVal
 
+#computes new value using full bet
 def fullVal(probability, reward, risk, prev):
 	if random.random() < probability:
 		totalVal = prev * (1 + reward)
@@ -65,6 +74,7 @@ def fullVal(probability, reward, risk, prev):
 		totalVal = prev * (1 - risk)
 	return totalVal
 
+#runs simulation equal to number of random walks
 def monteCarlo(probability, reward, risk, walks, runs, kelly = 0):
 	results = []
 	for i in range(walks):
@@ -79,6 +89,7 @@ def monteCarlo(probability, reward, risk, walks, runs, kelly = 0):
 		results.append(randomWalk[-1])
 	return results
 
+#gets percent of random walks that were profitable
 def getProfitableWalks(results):
 	count = 0
 	for value in results:
@@ -87,11 +98,12 @@ def getProfitableWalks(results):
 	prof = (count / len(results))
 	return prof
 
+#gets inputs to run simulation and print results
 def runSim(probability, reward, risk, walks, runs, kelly = 0):
 	if kelly > 0:
 		bet = "Kelly"
 	else:
-		bet = "All-In"
+		bet = "Full"
 
 	results = monteCarlo(probability, reward, risk, walks, runs, kelly)
 	prof = getProfitableWalks(results)
