@@ -43,7 +43,7 @@ def getRuns():
 
 #get kelly size from formula
 def getKelly(probability, ratio):
-	kelly = probability - ((1 - probability) / ratio)
+	kelly = (probability - ((1 - probability) / ratio))
 	if(kelly <= 0):
 		sys.exit("Suggested betting size is less than or equal to 0 and should not be taken")
 	return kelly
