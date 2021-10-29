@@ -27,7 +27,7 @@ putsData = optionData.puts
 
 #plot IV skew via matplotlib
 fig, axs = plt.subplots(2)
-fig.suptitle("Volatility Skew for " + str(ticker) + " " + str(strikeDate))
+fig.suptitle(f"Volatility Skew for {ticker} {strikeDate}")
 axs[0].plot(callsData["strike"], callsData["impliedVolatility"]*100)
 axs[0].set_title("IV on calls")
 axs[1].plot(putsData["strike"], putsData["impliedVolatility"]*100)

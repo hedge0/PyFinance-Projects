@@ -44,7 +44,7 @@ optimalPort = portfolios.iloc[(portfolios['Annualized Returns'] / portfolios['An
 newKeysList = optimalPort.keys()
 
 #print results and metrics
-print("\nPortfolio Size = $" + str(portfolioSize))
+print(f"\nPortfolio Size = ${portfolioSize}")
 count = 0
 newReturn = 0
 newVol = 0
@@ -52,12 +52,12 @@ newVol = 0
 for key in newKeysList:
 	if(count == 0):
 		newReturn = optimalPort[key]
-		print(str(key) + ": " + str(round(optimalPort[key] * 100, 2)) + "%")
+		print(f"{key}: {round(optimalPort[key] * 100, 2)}%")
 		count += 1
 	elif(count == 1):
 		newVol = optimalPort[key]
-		print(str(key) + ": " + str(round(optimalPort[key] * 100, 2)) + "%")
-		print("Sharpe Ratio: " + str(round(newReturn / newVol, 2)))
+		print(f"{key}: {round(optimalPort[key] * 100, 2)}%")
+		print(f"Sharpe Ratio: {round(newReturn / newVol, 2)}")
 		count += 1
 	else:
 		percentPort = portfolioSize * optimalPort[key]
@@ -69,5 +69,5 @@ for key in newKeysList:
 			count += 1
 		
 		if(sharesNum > 0):
-			print(str(key) + " has a stock price of $" + str(currentPrice))
-			print("Buy " + str(sharesNum) + " shares of " + str(key) + " at " + str(round(optimalPort[key] * 100, 2)) + "%")
+			print(f"{key} has a stock price of ${currentPrice}")
+			print(f"Buy {sharesNum} shares of {key} at {round(optimalPort[key] * 100, 2)}%")

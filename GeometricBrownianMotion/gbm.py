@@ -13,11 +13,11 @@ def strike(mean, sigma, multiplier, optionsChain, optionType):
 	if(optionType):
 		call = mean + (sigma * multiplier)
 		callStrike = optionsChain.iloc[(optionsChain["strike"]-call).abs().argsort()[:1]]
-		print("+" + str(multiplier) + "σ Strike: " + str(callStrike["strike"].item()) + " Call Price: " + str(optionsChain["lastPrice"].iloc[callStrike["strike"].index.item()]))
+		print(f"+{multiplier}σ Strike: " + str(callStrike["strike"].item()) + " Call Price: " + str(optionsChain["lastPrice"].iloc[callStrike["strike"].index.item()]))
 	else:
 		put = mean - (sigma * multiplier)
 		putStrike = optionsChain.iloc[(optionsChain["strike"]-put).abs().argsort()[:1]]
-		print("-" + str(multiplier) + "σ Strike: " + str(putStrike["strike"].item()) + " Put Price: " + str(optionsChain["lastPrice"].iloc[putStrike["strike"].index.item()]))
+		print(f"-{multiplier}σ Strike: " + str(putStrike["strike"].item()) + " Put Price: " + str(optionsChain["lastPrice"].iloc[putStrike["strike"].index.item()]))
 
 #get ticker from user
 def getTicker():
@@ -63,13 +63,13 @@ callsData = optionData.calls
 putsData = optionData.puts
 
 #display simulation variables
-print("Simulation Variables for " + str(ticker) + ":")
-print("Strike Date: " + str(strikeDate))
-print("Days till Expiry: " + str(numDays))
-print("Runs: " + str(numRuns))
-print("Start Price: " + str(round(startPrice, 2)))
-print("Daily Volatility: " + str(round(dailyVol, 6)))
-print("Daily Drift: " + str(round(dailyDriftMean, 6)), end = '\n\n')
+print(f"Simulation Variables for {ticker}:")
+print(f"Strike Date: {strikeDate}")
+print(f"Days till Expiry: {numDays}")
+print(f"Runs: {numRuns}")
+print(f"Start Price: {round(startPrice, 2)}")
+print(f"Daily Volatility: {round(dailyVol, 6)}")
+print(f"Daily Drift: {round(dailyDriftMean, 6)}", end = '\n\n')
 
 #create 2d array of random daily volatility values and insert starting price
 np.random.seed(random.randint(1, 10))
@@ -95,9 +95,9 @@ variance = np.var(finalPrices)
 
 #display metrics, plus option values
 print("Normal Distribution of Strikes and Metrics:")
-print("μ: " + str(round(mean, 2)))
-print("σ: " + str(round(sigma, 2)))
-print("σ2: " + str(round(variance, 2)))
+print(f"μ: {round(mean, 2)}")
+print(f"σ: {round(sigma, 2)}")
+print(f"σ2: {round(variance, 2)}")
 
 strike(mean, sigma, 3, callsData, True)
 strike(mean, sigma, 2, callsData, True)
