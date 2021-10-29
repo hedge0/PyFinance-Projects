@@ -109,9 +109,9 @@ def runSim(probability, reward, risk, walks, runs, kelly = 0):
 	prof = getProfitableWalks(results)
 	mean, sigma = getStats(results)
 
-	print("\n" + bet + " μ: " + str(round(mean, 4)))
-	print(bet + " σ: " + str(round(sigma, 4)))
-	print(str(round(prof * 100, 4)) + "%" + " Profitable Walks")
+	print(f"\n{bet} μ: {round(mean, 4)}")
+	print(f"{bet} σ: {round(sigma, 4)}")
+	print(f"{round(prof * 100, 4)}% Profitable Walks")
 
 probability = getProbability()
 reward, risk, ratio = getRatio()
@@ -119,9 +119,9 @@ runs = getRuns()
 walks = 10000
 kelly = getKelly(probability, ratio)
 
-print("\nWin Probability: " + str(probability * 100) + "%")
-print("Risk Reward Ratio: " + str(round(ratio, 4)))
-print("Optimal Kelly Size: " + str(round(kelly, 4) * 100) + "%")
+print(f"\nWin Probability: {probability * 100}%")
+print(f"Risk Reward Ratio: {round(ratio, 4)}")
+print(f"Optimal Kelly Size: {round(kelly, 4) * 100}%")
 
 runSim(probability, reward, risk, walks, runs, kelly)
 runSim(probability, reward, risk, walks, runs)
