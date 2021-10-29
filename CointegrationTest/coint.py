@@ -23,7 +23,7 @@ uniquePairs = (keySize * (keySize - 1)) / 2
 pValMax = 0.5
 pairsList = []
 
-print("\n" + str(keySize) + " tickers span a valid backtest with " + str(int(uniquePairs)) + " possible pair(s).")
+print(f"\n{str(keySize)} tickers span a valid backtest with {int(uniquePairs)} possible pair(s).")
 
 #run cointegration test on all possible pairs
 for i in range(keySize):
@@ -39,10 +39,10 @@ for i in range(keySize):
 
 pairsList = sorted(pairsList, key = itemgetter(3), reverse = True)
 
-print(str(len(pairsList)) + " possible cointegrated pairs with p-values less than " + str(pValMax) + ":")
+print(f"{len(pairsList)} possible cointegrated pairs with p-values less than {str(pValMax)}:")
 
 #print out valid pairs with sufficient p-value
 for pair in pairsList:
-	print("\n" + str(pair[0]) + " and " + str(pair[1]) + ":")
-	print("p-value = " + str(round(pair[2], 4)))
-	print("correlation coefficient = " + str(round(pair[3], 4)))
+	print(f"\n {pair[0]} and {pair[1]}:")
+	print(f"p-value = {round(pair[2], 4)}")
+	print(f"correlation coefficient = {round(pair[3], 4)}")
