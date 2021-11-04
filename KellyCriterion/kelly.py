@@ -50,8 +50,8 @@ class Kelly:
 
 	#run simulation equal to number of random walks
 	def run_monte_carlo(self, val, iterations):
-		if (val < 0):
-			exit("Suggested betting size is less than 0")
+		if val < 0:
+			exit("Bet size is less than 0")
 
 		results = []
 		for i in range(iterations):
@@ -78,6 +78,10 @@ class Kelly:
 	def get_reward(self):
 		return self.reward
 
+	#get number of runs
+	def get_runs(self):
+		return self.runs
+
 	#get ratio
 	def get_ratio(self):
 		return self.ratio
@@ -86,18 +90,14 @@ class Kelly:
 	def get_kelly(self):
 		return self.kelly
 
-	#get number of consecutive runs
-	def get_runs(self):
-		return self.runs
-
-	#get kellyMean
+	#get mean
 	def get_mean(self):
 		return self.mean
 
-	#get kellySigma
+	#get sigma
 	def get_sigma(self):
 		return self.sigma	
 
-	#get kellyWalks
+	#get walks
 	def get_walks(self):
 		return self.walks	
