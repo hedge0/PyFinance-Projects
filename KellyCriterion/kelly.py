@@ -7,31 +7,16 @@ class Kelly:
 
 	def __init__(self, probability, risk, reward, runs):
 
-		probability = self._check_float(probability)
-		risk = self._check_float(risk)
-		reward = self._check_float(reward)
-		runs = self._check_int(runs)
-
-		ratio = reward / risk
-		kelly = probability - ((1 - probability) / ratio)
-		
-		if(kelly <= 0):
-			exit("Suggested betting size is less than or equal to 0 and should not be taken")
-
-		self.probability = probability
-		self.risk = risk
-		self.reward = reward
-		self.ratio = ratio
-		self.kelly = kelly
-		self.runs = runs
-		self.kellySim = self._monte_carlo(self.kelly)
-		self.fullSim = self._monte_carlo(1)
-		self.kellyMean = mean(self.kellySim)
-		self.fullMean = mean(self.fullSim)
-		self.kellySigma = std(self.kellySim)
-		self.fullSigma = std(self.fullSim)
-		self.kellyWalks = self._get_profitable_walks(self.kellySim)
-		self.fullWalks = self._get_profitable_walks(self.fullSim)
+		self.probability = self._check_float(probability)
+		self.risk = self._check_float(risk)
+		self.reward = self._check_float(reward)
+		self.runs = self._check_int(runs)
+		self.ratio = self.reward / self.risk
+		self.kelly = self.probability - ((1 - self.probability) / self.ratio)
+		self.results = None
+		self.mean = None
+		self.sigma = None
+		self.walks = None
 	
 	#check that string can be converted to float
 	def _check_float(self, val):
@@ -51,17 +36,6 @@ class Kelly:
 
 		return int(val)
 
-	#run simulation equal to number of random walks
-	def _monte_carlo(self, val):
-		results = []
-		for i in range(10000):
-			randomWalk = deque()
-			randomWalk.append(1)
-			for i in range(1, self.runs + 1):
-				randomWalk.append(self._total_val(randomWalk[i-1], val))
-			results.append(randomWalk[-1])
-		return results
-
 	#compute new value for random walk
 	def _total_val(self, prev, val):
 		if random() < self.probability:
@@ -73,6 +47,24 @@ class Kelly:
 	#get percent of random walks that were profitable
 	def _get_profitable_walks(self, results):
 		return len(list(filter(lambda x: x > 1, results))) / len(results)
+
+	#run simulation equal to number of random walks
+	def run_monte_carlo(self, val, iterations):
+		if (val < 0):
+			exit("Suggested betting size is less than 0")
+
+		results = []
+		for i in range(iterations):
+			randomWalk = deque()
+			randomWalk.append(1)
+			for i in range(1, self.runs + 1):
+				randomWalk.append(self._total_val(randomWalk[i-1], val))
+			results.append(randomWalk[-1])
+
+		self.results = results
+		self.mean = mean(results)
+		self.sigma = std(results)
+		self.walks = self._get_profitable_walks(results)
 
 	#get probability
 	def get_probability(self):
@@ -99,25 +91,13 @@ class Kelly:
 		return self.runs
 
 	#get kellyMean
-	def get_kelly_mean(self):
-		return self.kellyMean
-
-	#get fullMean
-	def get_full_mean(self):
-		return self.fullMean
+	def get_mean(self):
+		return self.mean
 
 	#get kellySigma
-	def get_kelly_sigma(self):
-		return self.kellySigma	
-
-	#get fullSigma
-	def get_full_sigma(self):
-		return self.fullSigma
+	def get_sigma(self):
+		return self.sigma	
 
 	#get kellyWalks
-	def get_kelly_walks(self):
-		return self.kellyWalks	
-
-	#get fullWalks
-	def get_full_walks(self):
-		return self.fullWalks
+	def get_walks(self):
+		return self.walks	
