@@ -95,49 +95,49 @@ class Kelly:
 		return prof
 
 	#get probability
-	def getProbability(self):
+	def get_probability(self):
 		return self.probability
 
 	#get risk
-	def getRisk(self):
+	def get_risk(self):
 		return self.risk
 
 	#get reward
-	def getReward(self):
+	def get_reward(self):
 		return self.reward
 
 	#get ratio
-	def getRatio(self):
+	def get_ratio(self):
 		return self.ratio
 	
 	#get kelly
-	def getKelly(self):
+	def get_kelly(self):
 		return self.kelly
 
 	#get number of consecutive runs
-	def getRuns(self):
+	def get_runs(self):
 		return self.runs
 
 	#get kellyMean
-	def getKellyMean(self):
+	def get_kelly_mean(self):
 		return self.kellyMean
 
 	#get fullMean
-	def getFullMean(self):
+	def get_full_mean(self):
 		return self.fullMean
 
 	#get kellySigma
-	def getKellySigma(self):
+	def get_kelly_sigma(self):
 		return self.kellySigma	
 
 	#get fullSigma
-	def getFullSigma(self):
+	def get_full_sigma(self):
 		return self.fullSigma
 
 	#get kellyWalks
-	def getKellyWalks(self):
+	def get_kelly_walks(self):
 		return self.kellyWalks	
 
 	#get fullWalks
-	def getFullWalks(self):
+	def get_full_walks(self):
 		return self.fullWalks
