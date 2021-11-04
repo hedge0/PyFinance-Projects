@@ -1,9 +1,14 @@
 from kelly import Kelly
 
-probability = input("Enter the Expected Probability of Winning: ")
-risk = input("Enter the Potential Risk: ")
-reward = input("Enter the Potential Reward: ")
-runs = input("Enter the Number of Consecutive Bets: ")
+probability = .5
+risk = .8
+reward = 1.2
+runs = 10
+
+#probability = input("Enter the Expected Probability of Winning: ")
+#risk = input("Enter the Potential Risk: ")
+#reward = input("Enter the Potential Reward: ")
+#runs = input("Enter the Number of Consecutive Bets: ")
 
 sim = Kelly(probability, risk, reward, runs)
 
