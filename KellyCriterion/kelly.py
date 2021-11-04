@@ -1,8 +1,10 @@
-import sys
-import random
-import numpy as np
+from sys import exit
+from random import random
+from numpy import mean, std
+from collections import deque
 
 class Kelly:
+
 	def __init__(self, probability, risk, reward, runs):
 
 		probability = self._check_float(probability)
@@ -14,7 +16,7 @@ class Kelly:
 		kelly = probability - ((1 - probability) / ratio)
 		
 		if(kelly <= 0):
-			sys.exit("Suggested betting size is less than or equal to 0 and should not be taken")
+			exit("Suggested betting size is less than or equal to 0 and should not be taken")
 
 		self.probability = probability
 		self.risk = risk
@@ -22,12 +24,12 @@ class Kelly:
 		self.ratio = ratio
 		self.kelly = kelly
 		self.runs = runs
-		self.kellySim = self._monte_carlo(True)
-		self.fullSim = self._monte_carlo(False)
-		self.kellyMean = np.mean(self.kellySim)
-		self.fullMean = np.mean(self.fullSim)
-		self.kellySigma = np.std(self.kellySim)
-		self.fullSigma = np.std(self.fullSim)
+		self.kellySim = self._monte_carlo(self.kelly)
+		self.fullSim = self._monte_carlo(1)
+		self.kellyMean = mean(self.kellySim)
+		self.fullMean = mean(self.fullSim)
+		self.kellySigma = std(self.kellySim)
+		self.fullSigma = std(self.fullSim)
 		self.kellyWalks = self._get_profitable_walks(self.kellySim)
 		self.fullWalks = self._get_profitable_walks(self.fullSim)
 	
@@ -36,7 +38,7 @@ class Kelly:
 		try:
 			float(val)
 		except ValueError:
-			sys.exit("Not a Float")
+			exit("Not a Float")
 
 		return float(val)
 
@@ -45,54 +47,32 @@ class Kelly:
 		try:
 			int(val)
 		except ValueError:
-			sys.exit("Not an Int")
+			exit("Not an Int")
 
 		return int(val)
 
 	#run simulation equal to number of random walks
-	def _monte_carlo(self, simType):
-		walks = 10000
+	def _monte_carlo(self, val):
 		results = []
-		for i in range(walks):
-			randomWalk = []
+		for i in range(10000):
+			randomWalk = deque()
 			randomWalk.append(1)
 			for i in range(1, self.runs + 1):
-				prev = randomWalk[i-1]
-				if simType:
-					randomWalk.append(self._kelly_val(prev))
-				else:
-					randomWalk.append(self._full_val(prev))
+				randomWalk.append(self._total_val(randomWalk[i-1], val))
 			results.append(randomWalk[-1])
 		return results
 
-	#compute new value using kelly
-	def _kelly_val(self, prev):
-		if random.random() < self.probability:
-			kellyVal = (self.kelly * prev) * (1 + self.reward)
-			otherVal = (1 - self.kelly) * prev
-			totalVal = kellyVal + otherVal
+	#compute new value for random walk
+	def _total_val(self, prev, val):
+		if random() < self.probability:
+			totalVal = (1 + self.reward) * (val * prev) + (1 - val) * prev
 		else:
-			kellyVal = (self.kelly * prev) * (1 - self.risk)
-			otherVal = (1 - self.kelly) * prev
-			totalVal = kellyVal + otherVal
-		return totalVal
-
-	#compute new value using full
-	def _full_val(self, prev):
-		if random.random() < self.probability:
-			totalVal = prev * (1 + self.reward)
-		else:
-			totalVal = prev * (1 - self.risk)
+			totalVal = (1 - self.risk) * (val * prev) + (1 - val) * prev
 		return totalVal
 
 	#get percent of random walks that were profitable
 	def _get_profitable_walks(self, results):
-		count = 0
-		for value in results:
-			if value > 1:
-				count += 1
-		prof = (count / len(results))
-		return prof
+		return len(list(filter(lambda x: x > 1, results))) / len(results)
 
 	#get probability
 	def get_probability(self):
