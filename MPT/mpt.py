@@ -4,14 +4,13 @@ import pandas as pd
 from pandas_datareader import data as pdr
 import datetime
 from datetime import date
-from wallstreet import Stock
 import yfinance as yf
 yf.pdr_override()
 
 #initial variables, including dates, portfolio size, number of desired securities in portfolio, and tickers (tickers, port size, # of port securities, and startDate need to be manually adjusted)
 endDate = date.today()
 startDate = endDate - datetime.timedelta(days = 365 * 2)
-tickers = ['RH', 'LAD', 'SYNA', 'WSO', 'MASI', 'TREX', 'AVLR', 'ZNGA', 'PEN', 'PLTR', 'DKNG', 'AZPN', 'HUBB', 'TECH']
+tickers = ['MSFT', 'TSLA', 'AMZN', 'AAPL']
 portfolioSize = 100000.00
 
 #get data for list of picked securities
@@ -61,7 +60,7 @@ for key in newKeysList:
 		count += 1
 	else:
 		percentPort = portfolioSize * optimalPort[key]
-		currentPrice = Stock(key).price
+		currentPrice = yf.Ticker(key).info['regularMarketPrice']
 		sharesNum = math.floor(percentPort / currentPrice)
 
 		if(count == 2):
