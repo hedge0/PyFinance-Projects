@@ -7,16 +7,17 @@ from statsmodels.tsa.stattools import coint
 import yfinance as yf
 yf.pdr_override()
 
-#set starting variables (only need to manuably set tickers)
+# set starting variables (only need to manuably set tickers)
 endDate = date.today()
-startDate = endDate - datetime.timedelta(days = 5 * 365)
-tickers = ['SMH', 'ARKK', 'XLK', 'QQQ', 'AAPL', 'MSFT', 'TSLA', 'ORCL', 'QCOM', 'AMD', 'UBER', 'SQ']
+startDate = endDate - datetime.timedelta(days=5 * 365)
+tickers = ['SMH', 'ARKK', 'XLK', 'QQQ', 'AAPL', 'MSFT',
+           'TSLA', 'ORCL', 'QCOM', 'AMD', 'UBER', 'SQ']
 
-#get data for each ticker
-data = pdr.get_data_yahoo(tickers, start = startDate, end = endDate)
+# get data for each ticker
+data = pdr.get_data_yahoo(tickers, start=startDate, end=endDate)
 prices = data["Adj Close"].dropna(axis='columns')
 
-#set up data for test
+# set up data for test
 keysList = prices.keys()
 keySize = len(keysList)
 uniquePairs = (keySize * (keySize - 1)) / 2
@@ -25,24 +26,24 @@ pairsList = []
 
 print(f"\n{str(keySize)} tickers span a valid backtest with {int(uniquePairs)} possible pair(s).")
 
-#run cointegration test on all possible pairs
+# run cointegration test on all possible pairs
 for i in range(keySize):
     for j in range(i + 1, keySize):
-    	stock1 = prices[keysList[i]]
-    	stock2 = prices[keysList[j]]
-    	result = coint(stock1, stock2)
-    	pvalue = result[1]
-    	
-    	if(pvalue < pValMax):
-    		corr = np.corrcoef(stock1, stock2)
-    		pairsList.append((keysList[i], keysList[j], pvalue, corr[0][1]))
+        stock1 = prices[keysList[i]]
+        stock2 = prices[keysList[j]]
+        result = coint(stock1, stock2)
+        pvalue = result[1]
 
-pairsList = sorted(pairsList, key = itemgetter(3), reverse = True)
+        if(pvalue < pValMax):
+            corr = np.corrcoef(stock1, stock2)
+            pairsList.append((keysList[i], keysList[j], pvalue, corr[0][1]))
+
+pairsList = sorted(pairsList, key=itemgetter(3), reverse=True)
 
 print(f"{len(pairsList)} possible cointegrated pairs with p-values less than {str(pValMax)}:")
 
-#print out valid pairs with sufficient p-value
+# print out valid pairs with sufficient p-value
 for pair in pairsList:
-	print(f"\n {pair[0]} and {pair[1]}:")
-	print(f"p-value = {round(pair[2], 4)}")
-	print(f"correlation coefficient = {round(pair[3], 4)}")
+    print(f"\n {pair[0]} and {pair[1]}:")
+    print(f"p-value = {round(pair[2], 4)}")
+    print(f"correlation coefficient = {round(pair[3], 4)}")
