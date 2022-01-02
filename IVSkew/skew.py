@@ -21,18 +21,23 @@ def getDate(dates):
     return date
 
 
-ticker, data = getTicker()
-dates = data.options
-strikeDate = getDate(dates)
-optionData = data.option_chain(strikeDate)
-callsData = optionData.calls
-putsData = optionData.puts
+def main():
+    ticker, data = getTicker()
+    dates = data.options
+    strikeDate = getDate(dates)
+    optionData = data.option_chain(strikeDate)
+    callsData = optionData.calls
+    putsData = optionData.puts
 
-# plot IV skew via matplotlib
-fig, axs = plt.subplots(2)
-fig.suptitle(f"Volatility Skew for {ticker} {strikeDate}")
-axs[0].plot(callsData["strike"], callsData["impliedVolatility"]*100)
-axs[0].set_title("IV on calls")
-axs[1].plot(putsData["strike"], putsData["impliedVolatility"]*100)
-axs[1].set_title("IV on puts")
-plt.show()
+    # plot IV skew via matplotlib
+    fig, axs = plt.subplots(2)
+    fig.suptitle(f"Volatility Skew for {ticker} {strikeDate}")
+    axs[0].plot(callsData["strike"], callsData["impliedVolatility"]*100)
+    axs[0].set_title("IV on calls")
+    axs[1].plot(putsData["strike"], putsData["impliedVolatility"]*100)
+    axs[1].set_title("IV on puts")
+    plt.show()
+
+
+if __name__ == '__main__':
+    main()
