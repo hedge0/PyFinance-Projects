@@ -91,8 +91,13 @@ def plotSpread(ticker1, ticker2, years):
     mpf.show()
 
 
-ticker1 = "NQ=F"
-ticker2 = "ES=F"
-years = 2
+def main():
+    ticker1 = "NQ=F"
+    ticker2 = "ES=F"
+    years = 2
 
-plotSpread(ticker1, ticker2, years)
+    plotSpread(ticker1, ticker2, years)
+
+
+if __name__ == '__main__':
+    main()
