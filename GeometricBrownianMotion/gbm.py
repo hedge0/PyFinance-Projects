@@ -98,9 +98,8 @@ def strike(mean, sigma, multiplier, optionsChain, optionType):
 
 # query data for every ticker and parse data
 def getPrices(tickers):
-    data = pdr.get_data_yahoo(tickers, start=date.today(
-    ) - timedelta(days=180), end=date.today())
-    prices = data["Adj Close"]
+    prices = pdr.get_data_yahoo(tickers, start=date.today(
+    )-timedelta(days=180), end=date.today())["Adj Close"]
     return prices
 
 

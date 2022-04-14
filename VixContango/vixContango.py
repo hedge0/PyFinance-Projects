@@ -36,17 +36,15 @@ def main():
 
 # query data from for every ticker and parse data (yahoo api)
 def getPricesYahoo(tickers):
-    data = pdr.get_data_yahoo(tickers, start=date.today(
-    ) - timedelta(days=5 * 365), end=date.today())
-    prices = data["Adj Close"]
+    prices = pdr.get_data_yahoo(tickers, start=date.today(
+    )-timedelta(days=5*365), end=date.today())["Adj Close"]
     return prices
 
 
 # query data from for every ticker and parse data (quandl api)
 def getPricesQuandl(tickers):
-    data = get(tickers, trim_start=date.today() -
-               timedelta(days=5 * 365), trim_end=date.today(), authtoken=apiKey)
-    prices = data["Settle"]
+    prices = get(tickers, trim_start=date.today()-timedelta(days=5*365),
+                 trim_end=date.today(), authtoken=apiKey)["Settle"]
     return prices
 
 

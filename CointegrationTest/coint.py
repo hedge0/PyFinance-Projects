@@ -37,9 +37,8 @@ def main():
 
 # query data for every ticker and parse data
 def getPrices(tickers):
-    data = pdr.get_data_yahoo(tickers, start=date.today(
-    ) - timedelta(days=5 * 365), end=date.today())
-    prices = data["Adj Close"].dropna(axis='columns')
+    prices = pdr.get_data_yahoo(tickers, start=date.today(
+    )-timedelta(days=5*365), end=date.today())["Adj Close"].dropna(axis='columns')
     return prices
 
 
