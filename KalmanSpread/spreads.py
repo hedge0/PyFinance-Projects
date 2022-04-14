@@ -12,16 +12,11 @@ def main():
     plotSpread("NQ=F", "ES=F", 2)
 
 
-def plotSpread(ticker1, ticker2, years):
+def plotSpread(ticker1, ticker2, years, dt=1, mu=0, theta=1):
     fig = figure(figsize=(15, 10))
     axs = fig.add_subplot(1, 1, 1, style='yahoo')
-
-    endDate = date.today()
-    startDate = endDate - timedelta(days=years * 365)
-    data1 = pdr.get_data_yahoo(ticker1, start=startDate, end=endDate)
-    data2 = pdr.get_data_yahoo(ticker2, start=startDate, end=endDate)
-    firstPrice = data1['Adj Close']
-    secondPrice = data2['Adj Close']
+    firstPrice = getPrices(ticker1, years)
+    secondPrice = getPrices(ticker2, years)
     df1 = DataFrame({'secondPrice': secondPrice, 'firstPrice': firstPrice})
     df1.index = to_datetime(df1.index)
     state_means = regression(firstPrice, secondPrice)
@@ -30,10 +25,6 @@ def plotSpread(ticker1, ticker2, years):
     df2 = DataFrame({'Open': df1['spread'].shift(periods=1), 'High': df1['spread'],
                      'Low': df1['spread'], 'Close': df1['spread'], 'Volume': df1['spread']})
     df2 = df2[1:]
-
-    dt = 1
-    mu = 0
-    theta = 1
     sigma = std(df1['spread'])
     ts = arange(0, len(df1['spread'].values), dt)
     var = array([sigma**2 / (2 * theta) *
@@ -42,7 +33,6 @@ def plotSpread(ticker1, ticker2, years):
     stdev = stdev[-1]
     upper = mu + stdev
     lower = mu - stdev
-
     plot(
         df2,
         type='candle',
@@ -56,6 +46,14 @@ def plotSpread(ticker1, ticker2, years):
         xrotation=0
     )
     show()
+
+
+# query data for every ticker and parse data
+def getPrices(tickers, years):
+    data = pdr.get_data_yahoo(tickers, start=date.today(
+    ) - timedelta(days=years * 365), end=date.today())
+    prices = data["Adj Close"]
+    return prices
 
 
 def avg(x):

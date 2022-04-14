@@ -14,14 +14,12 @@ def main():
     prices = getPrices(tickers)
     keysList = prices.keys()
     pairsList = []
-
     print(f"\n{str(len(keysList))} tickers span a valid backtest with {int((len(keysList) * (len(keysList) - 1)) / 2)} possible pair(s).")
 
     # run cointegration test on all possible pairs
     for i in range(len(keysList)):
         for j in range(i + 1, len(keysList)):
             result = coint(prices[keysList[i]], prices[keysList[j]])
-
             if(result[1] < 0.25):
                 corr = corrcoef(prices[keysList[i]], prices[keysList[j]])
                 pairsList.append(
