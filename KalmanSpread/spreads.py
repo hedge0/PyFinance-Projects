@@ -50,9 +50,8 @@ def plotSpread(ticker1, ticker2, years, dt=1, mu=0, theta=1):
 
 # query data for every ticker and parse data
 def getPrices(tickers, years):
-    data = pdr.get_data_yahoo(tickers, start=date.today(
-    ) - timedelta(days=years * 365), end=date.today())
-    prices = data["Adj Close"]
+    prices = pdr.get_data_yahoo(tickers, start=date.today(
+    )-timedelta(days=years*365), end=date.today())["Adj Close"]
     return prices
 
 
