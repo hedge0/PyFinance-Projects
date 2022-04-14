@@ -7,7 +7,6 @@ from collections import deque
 class Kelly:
 
     def __init__(self, probability, risk, reward, runs):
-
         self.probability = self._check_float(probability)
         self.risk = self._check_float(risk)
         self.reward = self._check_float(reward)
@@ -25,7 +24,6 @@ class Kelly:
             float(val)
         except ValueError:
             exit("Not a Float")
-
         return float(val)
 
     # check that string can be converted to int
@@ -34,7 +32,6 @@ class Kelly:
             int(val)
         except ValueError:
             exit("Not an Int")
-
         return int(val)
 
     # compute new value for random walk
@@ -53,7 +50,6 @@ class Kelly:
     def run_monte_carlo(self, val, iterations):
         if val < 0:
             exit("Bet size is less than 0")
-
         results = []
         for i in range(iterations):
             randomWalk = deque()
@@ -61,7 +57,6 @@ class Kelly:
             for i in range(1, self.runs + 1):
                 randomWalk.append(self._total_val(randomWalk[i-1], val))
             results.append(randomWalk[-1])
-
         self.results = results
         self.mean = mean(results)
         self.sigma = std(results)

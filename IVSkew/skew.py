@@ -4,23 +4,6 @@ import yfinance as yf
 yf.pdr_override()
 
 
-def getTicker():
-    ticker = input("Enter your Ticker: ")
-    data = yf.Ticker(ticker)
-    if not data.options:
-        exit("Invalid Ticker")
-    return ticker, data
-
-
-def getDate(dates):
-    for date in dates:
-        print(date)
-    date = input("Enter your Expiration Date: ")
-    if date not in dates:
-        exit("Invalid Date")
-    return date
-
-
 def main():
     ticker, data = getTicker()
     dates = data.options
@@ -37,6 +20,23 @@ def main():
     axs[1].plot(putsData["strike"], putsData["impliedVolatility"]*100)
     axs[1].set_title("IV on puts")
     show()
+
+
+def getTicker():
+    ticker = input("Enter your Ticker: ")
+    data = yf.Ticker(ticker)
+    if not data.options:
+        exit("Invalid Ticker")
+    return ticker, data
+
+
+def getDate(dates):
+    for date in dates:
+        print(date)
+    date = input("Enter your Expiration Date: ")
+    if date not in dates:
+        exit("Invalid Date")
+    return date
 
 
 if __name__ == '__main__':

@@ -49,7 +49,6 @@ def main():
     for i in range(numRuns):
         for j in range(1, numDays + 1):
             simPrices[i][j] = (simPrices[i][j] + 1) * simPrices[i][j - 1]
-
     finalPrices = []
 
     # plot simulation results
@@ -67,7 +66,6 @@ def main():
     print(f"μ: {round(mu, 2)}")
     print(f"σ: {round(sigma, 2)}")
     print(f"σ2: {round(variance, 2)}")
-
     strike(mu, sigma, 3, callsData, True)
     strike(mu, sigma, 2, callsData, True)
     strike(mu, sigma, 1, callsData, True)
