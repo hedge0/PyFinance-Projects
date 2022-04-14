@@ -9,7 +9,6 @@ apiKey = ""
 
 
 def main():
-
     # retrieve data
     vixSpot = getPricesYahoo('^VIX')
     vixFront = getPricesQuandl('CHRIS/CBOE_VX1')
