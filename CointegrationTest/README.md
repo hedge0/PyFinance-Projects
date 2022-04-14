@@ -1,0 +1,1 @@
+This program finds all cointegrated pairs within a pool of securities, for possible use in a pairs trade. Typically, cointergrated pairs tend to be found from similar market sectors (tech, finance, metals, etc). You must edit the tickers within the tickers array to change the securities for which the test is run on.
