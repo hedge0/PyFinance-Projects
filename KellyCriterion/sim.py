@@ -19,12 +19,6 @@ def main():
     print(f"σ: {round(sim.get_sigma(), 4)}")
     print(f"{round(sim.get_walks() * 100, 4)}% Profitable Walks")
 
-    sim.run_monte_carlo(1, 10000)
-
-    print(f"\nμ: {round(sim.get_mean(), 4)}")
-    print(f"σ: {round(sim.get_sigma(), 4)}")
-    print(f"{round(sim.get_walks() * 100, 4)}% Profitable Walks")
-
 
 if __name__ == '__main__':
     main()
