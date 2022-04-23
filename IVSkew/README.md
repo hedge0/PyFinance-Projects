@@ -1,1 +1,0 @@
-Use this program to graph the IV skew of any option strike date. Use the IV skew to find the cheapest option within the same strike date chain. You must change the ticker to change the security for which the test is run on, as well as the strike date.
