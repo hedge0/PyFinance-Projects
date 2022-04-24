@@ -1,1 +1,1 @@
-add here
+This program creates a spread between 2 securities. The spread uses a kalman filter to improve stationarity, and then standardizes the spread using ornstein uhlenbeck variance. The result is outputted to a candlestick chart.

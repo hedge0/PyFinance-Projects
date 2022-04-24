@@ -6,7 +6,7 @@ from random import shuffle
 from tensorflow import keras
 
 
-DATADIR = [""]
+DATADIR = ["GC_SI"]
 CATEGORIES = ["DOWN", "UP"]
 training_data = []
 IMG_SIZE = 256

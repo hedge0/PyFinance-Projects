@@ -12,6 +12,7 @@ def main():
     plotSpread("NQ=F", "ES=F", 2)
 
 
+# plots stationary spread for 2 tickers
 def plotSpread(ticker1, ticker2, years, dt=1, mu=0, theta=1):
     fig = figure(figsize=(15, 10))
     axs = fig.add_subplot(1, 1, 1, style='yahoo')
