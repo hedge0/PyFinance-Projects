@@ -50,7 +50,6 @@ func (this *Kelly) RunMonteCarlo(val float64, iterations int) {
 		}
 		results = append(results, randomWalk[len(randomWalk)-1])
 	}
-
 	this.result = results
 	this.mean = this._SetMean(results)
 	this.sigma = this._SetSigma(results)
