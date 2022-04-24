@@ -1,1 +1,1 @@
-This program attempts to predict the direction of the next candlestick for existing charts, and uses tensorflow to do so. I have included a folder with both "UP" and "DOWN" sub-folders (each containing graphs with the final candle corresponding to the label) to use for training and testing data.
+This program attempts to predict the direction of the next candlestick for existing charts, and uses tensorflow to do so. I have included a folder with both "UP" and "DOWN" sub-folders to use for training and testing data.

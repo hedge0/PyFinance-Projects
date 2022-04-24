@@ -11,7 +11,7 @@ def main():
     # set tickers to call from yahoo finance api
     tickers = ['SMH', 'ARKK', 'XLK', 'QQQ', 'AAPL', 'MSFT',
                'TSLA', 'ORCL', 'QCOM', 'AMD', 'UBER', 'SQ']
-    prices = getPrices(tickers)
+    prices = getPrices(tickers, 4)
     keysList = prices.keys()
     pairsList = []
     print(f"\n{str(len(keysList))} tickers span a valid backtest with {int((len(keysList) * (len(keysList) - 1)) / 2)} possible pair(s).")
@@ -36,9 +36,9 @@ def main():
 
 
 # query data for every ticker and parse data
-def getPrices(tickers):
+def getPrices(tickers, years):
     prices = pdr.get_data_yahoo(tickers, start=date.today(
-    )-timedelta(days=5*365), end=date.today())["Adj Close"].dropna(axis='columns')
+    )-timedelta(days=years*365), end=date.today())["Adj Close"].dropna(axis='columns')
     return prices
 
 
