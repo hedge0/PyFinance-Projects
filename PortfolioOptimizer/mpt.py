@@ -12,9 +12,6 @@ class MPT:
         self.prices = self._getPrices(tickers, years)
         self.covMatrix = self.prices.pct_change().cov()
         self.yearlyReturns = self.prices.resample('Y').last().pct_change().mean()
-        self.portRet = []
-        self.portVol = []
-        self.portWeights = []
         self.optimalPort = None
         self.ret = None
         self.vol = None
@@ -22,16 +19,19 @@ class MPT:
 
     # simulate random weights on covariance matrix to find maximum return on volatility portfolio
     def runSimulation(self, runs):
+        portRet = []
+        portVol = []
+        portWeights = []
         for _ in range(runs):
             weights = random.random(len(self.prices.columns))
             weights = weights / sum(weights)
-            self.portWeights.append(weights)
-            self.portRet.append(dot(weights, self.yearlyReturns))
-            self.portVol.append(sqrt(self.covMatrix.mul(weights, axis=0).mul(
+            portWeights.append(weights)
+            portRet.append(dot(weights, self.yearlyReturns))
+            portVol.append(sqrt(self.covMatrix.mul(weights, axis=0).mul(
                 weights, axis=1).sum().sum()) * sqrt(252))
-        results = {'Annualized Returns': self.portRet, 'Annualized Volatility': self.portVol}
+        results = {'Annualized Returns': portRet, 'Annualized Volatility': portVol}
         for counter, symbol in enumerate(self.prices.columns.tolist()):
-            results[symbol] = [w[counter] for w in self.portWeights]
+            results[symbol] = [w[counter] for w in portWeights]
         ports = DataFrame(results)
         self.optimalPort = ports.iloc[(
             ports['Annualized Returns'] / ports['Annualized Volatility']).idxmax()]
@@ -66,15 +66,9 @@ class MPT:
 """
 def main():
     # initial variables, including dates, portfolio size, number of desired securities in portfolio, and tickers (tickers, port size, # of port securities, and startDate need to be manually adjusted)
-    tickers = ['MSFT', 'TSLA', 'AMZN', 'AAPL']
-    portfolioSize = 100000.00
-    numRuns = 10000
-
+    portfolioSize = 100000
     # print results and metrics
     print(f"\nPortfolio Size = ${portfolioSize}")
-    print(f"{'Annualized Returns'}: {round(ret * 100, 2)}%")
-    print(f"{'Annualized Volatility'}: {round(vol * 100, 2)}%")
-    print(f"Sharpe Ratio: {round(ret / vol, 2)}\n")
     for key in tickers:
         if(optimalPort[key]):
             percentPort = portfolioSize * optimalPort[key]
