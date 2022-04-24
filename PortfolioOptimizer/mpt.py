@@ -34,7 +34,7 @@ class MPT:
             results[symbol] = [w[counter] for w in portWeights]
         ports = DataFrame(results)
         self.optimalPort = ports.iloc[(
-            ports['Annualized Returns'] / ports['Annualized Volatility']).idxmax()]
+            ports['Annualized Returns'] / ports['Annualized Volatility']).idxmax()].to_dict()
         self.ret = self.optimalPort['Annualized Returns']
         self.vol = self.optimalPort['Annualized Volatility']
         self.sharpe = self.ret / self.vol
@@ -62,24 +62,4 @@ class MPT:
         prices = pdr.get_data_yahoo(tickers, start=date.today(
         )-timedelta(days=years*365), end=date.today())["Adj Close"]
         return prices
-
-"""
-def main():
-    # initial variables, including dates, portfolio size, number of desired securities in portfolio, and tickers (tickers, port size, # of port securities, and startDate need to be manually adjusted)
-    portfolioSize = 100000
-    # print results and metrics
-    print(f"\nPortfolio Size = ${portfolioSize}")
-    for key in tickers:
-        if(optimalPort[key]):
-            percentPort = portfolioSize * optimalPort[key]
-            currentPrice = yf.Ticker(key).info['regularMarketPrice']
-            sharesNum = floor(percentPort / currentPrice)
-            if(sharesNum > 0):
-                print(f"{key} has a stock price of ${currentPrice}")
-                print(
-                    f"Buy {sharesNum} shares of {key} at {round(optimalPort[key] * 100, 2)}%\n")
-
-
-if __name__ == '__main__':
-    main()
-"""
+        
