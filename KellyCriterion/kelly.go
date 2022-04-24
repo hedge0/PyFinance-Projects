@@ -5,15 +5,32 @@ import (
 	"math"
 	"math/rand"
 	"os"
+	"strconv"
 )
 
 func main() {
+	var input string
+	fmt.Print("Enter the Expected Probability of Winning: ")
+	fmt.Scanln(&input)
+	probability, _ := strconv.ParseFloat(input, 64)
+	fmt.Print("Enter the Potential Risk: ")
+	fmt.Scanln(&input)
+	risk, _ := strconv.ParseFloat(input, 64)
+	fmt.Print("Enter the Potential Reward: ")
+	fmt.Scanln(&input)
+	reward, _ := strconv.ParseFloat(input, 64)
+	fmt.Print("Enter the Number of Consecutive Bets: ")
+	fmt.Scanln(&input)
+	runs, _ := strconv.Atoi(input)
+
 	kelly := new(Kelly)
-	kelly.Init(.6, .5, .9, 20)
+	kelly.Init(probability, risk, reward, runs)
 	kelly.RunMonteCarlo(kelly.GetKelly(), 10000)
-	fmt.Println(kelly.GetMean())
-	fmt.Println(kelly.GetSigma())
-	fmt.Println(kelly.GetProfitability())
+	fmt.Printf("\nRisk Reward Ratio: %f\n", kelly.GetRatio())
+	fmt.Printf("Optimal Kelly Size: %f\n", kelly.GetKelly())
+	fmt.Printf("μ: %f\n", kelly.GetMean())
+	fmt.Printf("σ: %f\n", kelly.GetSigma())
+	fmt.Printf("%f%% Profitable Walks\n", kelly.GetProfitability()*100)
 }
 
 type Kelly struct {
@@ -57,23 +74,23 @@ func (this *Kelly) RunMonteCarlo(val float64, iterations int) {
 }
 
 func (this *Kelly) GetRatio() float64 {
-	return math.Round(this.ratio*100) / 100
+	return this.ratio
 }
 
 func (this *Kelly) GetKelly() float64 {
-	return math.Round(this.kelly*100) / 100
+	return this.kelly
 }
 
 func (this *Kelly) GetMean() float64 {
-	return math.Round(this.mean*100) / 100
+	return this.mean
 }
 
 func (this *Kelly) GetSigma() float64 {
-	return math.Round(this.sigma*100) / 100
+	return this.sigma
 }
 
 func (this *Kelly) GetProfitability() float64 {
-	return math.Round(this.profitability*10000) / 10000
+	return this.profitability
 }
 
 func (this *Kelly) _TotalValue(val float64, prev float64) float64 {
@@ -87,7 +104,7 @@ func (this *Kelly) _TotalValue(val float64, prev float64) float64 {
 }
 
 func (this *Kelly) _SetMean(results []float64) float64 {
-	var total float64 = 0
+	total := 0.0
 	for _, number := range results {
 		total += number
 	}
@@ -95,7 +112,7 @@ func (this *Kelly) _SetMean(results []float64) float64 {
 }
 
 func (this *Kelly) _SetSigma(results []float64) float64 {
-	var total float64 = 0
+	total := 0.0
 	mean := this.mean
 	for _, number := range results {
 		total += math.Pow((number - mean), 2)
