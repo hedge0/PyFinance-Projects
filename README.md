@@ -7,7 +7,7 @@ A collection of my quantitative finance projects aimed at leveraging Python for 
 This repository contains a diverse set of projects designed to help with quantitative finance research and trading automation. Each project focuses on specific aspects of financial markets, including risk management, strategy development, and performance optimization using Python. Below is a list of key projects included:
 
 ### 1. Kelly Criterion Bet Sizing Program
-   - **Description**: A Python implementation of the Kelly Criterion, helping users calculate the optimal betting size based on win probability, risk, and reward. It includes Monte Carlo simulations to visualize risk/reward scenarios.
+   - **Description**: A Goland implementation of the Kelly Criterion, helping users calculate the optimal betting size based on win probability, risk, and reward. It includes Monte Carlo simulations to visualize risk/reward scenarios.
    - **Key Features**:
      - Calculates optimal bet size using the Kelly Criterion.
      - Includes Monte Carlo simulation for scenario analysis.
