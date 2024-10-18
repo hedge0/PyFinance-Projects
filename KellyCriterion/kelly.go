@@ -8,6 +8,11 @@ import (
 	"strconv"
 )
 
+/**
+ * Main function for the Kelly Criterion Monte Carlo simulation.
+ * Prompts the user for probability, risk, reward, and number of runs, then
+ * calculates the optimal Kelly size and performs Monte Carlo simulation.
+ */
 func main() {
 	var input string
 	fmt.Print("Enter the Expected Probability of Winning: ")
@@ -33,6 +38,20 @@ func main() {
 	fmt.Printf("%f%% Profitable Walks\n", kelly.GetProfitability()*100)
 }
 
+/**
+ * Kelly struct represents the Kelly criterion parameters and Monte Carlo simulation results.
+ * Fields:
+ * - probability: The expected probability of winning.
+ * - risk: The potential risk percentage.
+ * - reward: The potential reward percentage.
+ * - runs: Number of consecutive bets (steps in the simulation).
+ * - ratio: Reward-to-risk ratio.
+ * - kelly: Optimal Kelly size for the given parameters.
+ * - result: Slice storing the results of Monte Carlo simulations.
+ * - mean: Mean value of the simulation outcomes.
+ * - sigma: Standard deviation of the simulation outcomes.
+ * - profitability: Percentage of profitable outcomes from the simulation.
+ */
 type Kelly struct {
 	probability   float64
 	risk          float64
@@ -46,6 +65,14 @@ type Kelly struct {
 	profitability float64
 }
 
+/**
+ * Initializes the Kelly struct with the given probability, risk, reward, and number of runs.
+ *
+ * @param probability - Expected probability of winning.
+ * @param risk - Potential risk percentage.
+ * @param reward - Potential reward percentage.
+ * @param runs - Number of consecutive bets.
+ */
 func (this *Kelly) Init(probability float64, risk float64, reward float64, runs int) {
 	this.probability = probability
 	this.risk = risk
@@ -55,6 +82,12 @@ func (this *Kelly) Init(probability float64, risk float64, reward float64, runs 
 	this.kelly = this.probability - ((1 - this.probability) / this.ratio)
 }
 
+/**
+ * Performs a Monte Carlo simulation to estimate the mean, standard deviation, and profitability of the strategy.
+ *
+ * @param val - Optimal Kelly size.
+ * @param iterations - Number of iterations for the Monte Carlo simulation.
+ */
 func (this *Kelly) RunMonteCarlo(val float64, iterations int) {
 	if val < 0 {
 		os.Exit(1)
@@ -73,26 +106,58 @@ func (this *Kelly) RunMonteCarlo(val float64, iterations int) {
 	this.profitability = this._SetProfitability(results)
 }
 
+/**
+ * Get the reward-to-risk ratio.
+ *
+ * @return ratio - Reward-to-risk ratio.
+ */
 func (this *Kelly) GetRatio() float64 {
 	return this.ratio
 }
 
+/**
+ * Get the optimal Kelly size.
+ *
+ * @return kelly - Optimal Kelly size.
+ */
 func (this *Kelly) GetKelly() float64 {
 	return this.kelly
 }
 
+/**
+ * Get the mean of the Monte Carlo simulation outcomes.
+ *
+ * @return mean - Mean value of the simulation results.
+ */
 func (this *Kelly) GetMean() float64 {
 	return this.mean
 }
 
+/**
+ * Get the standard deviation (sigma) of the Monte Carlo simulation outcomes.
+ *
+ * @return sigma - Standard deviation of the simulation results.
+ */
 func (this *Kelly) GetSigma() float64 {
 	return this.sigma
 }
 
+/**
+ * Get the percentage of profitable outcomes from the Monte Carlo simulation.
+ *
+ * @return profitability - Percentage of profitable walks.
+ */
 func (this *Kelly) GetProfitability() float64 {
 	return this.profitability
 }
 
+/**
+ * Helper function to calculate the total value of a bet in the random walk.
+ *
+ * @param val - Kelly fraction.
+ * @param prev - Previous total value.
+ * @return total - Updated total value based on win or loss.
+ */
 func (this *Kelly) _TotalValue(val float64, prev float64) float64 {
 	var total float64
 	if rand.Float64() < this.probability {
@@ -103,6 +168,12 @@ func (this *Kelly) _TotalValue(val float64, prev float64) float64 {
 	return total
 }
 
+/**
+ * Helper function to calculate the mean of simulation results.
+ *
+ * @param results - Slice containing the results of the Monte Carlo simulation.
+ * @return mean - Calculated mean value.
+ */
 func (this *Kelly) _SetMean(results []float64) float64 {
 	total := 0.0
 	for _, number := range results {
@@ -111,6 +182,12 @@ func (this *Kelly) _SetMean(results []float64) float64 {
 	return (total / float64(len(results)))
 }
 
+/**
+ * Helper function to calculate the standard deviation (sigma) of simulation results.
+ *
+ * @param results - Slice containing the results of the Monte Carlo simulation.
+ * @return sigma - Calculated standard deviation.
+ */
 func (this *Kelly) _SetSigma(results []float64) float64 {
 	total := 0.0
 	mean := this.mean
@@ -120,6 +197,12 @@ func (this *Kelly) _SetSigma(results []float64) float64 {
 	return math.Sqrt(total / float64(len(results)))
 }
 
+/**
+ * Helper function to calculate the profitability percentage from the Monte Carlo simulation.
+ *
+ * @param results - Slice containing the results of the Monte Carlo simulation.
+ * @return profitability - Percentage of outcomes where the value is greater than 1.
+ */
 func (this *Kelly) _SetProfitability(results []float64) float64 {
 	filtered := make([]float64, 0)
 	for _, number := range results {
