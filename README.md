@@ -1,13 +1,13 @@
 # PyFinance-Projects
 
-A collection of my quantitative finance projects aimed at leveraging Python for advanced financial analysis and trading strategies. These projects encompass a variety of topics, including trading algorithms, statistical analysis, and financial data visualization, with a focus on practical, real-world applications in quantitative finance.
+A collection of my quantitative finance projects aimed at leveraging Python and Go for advanced financial analysis and trading strategies. These projects encompass a variety of topics, including trading algorithms, statistical analysis, and financial data visualization, with a focus on practical, real-world applications in quantitative finance.
 
 ## Project Overview
 
-This repository contains a diverse set of projects designed to help with quantitative finance research and trading automation. Each project focuses on specific aspects of financial markets, including risk management, strategy development, and performance optimization using Python. Below is a list of key projects included:
+This repository contains a diverse set of projects designed to help with quantitative finance research and trading automation. Each project focuses on specific aspects of financial markets, including risk management, strategy development, and performance optimization using Python / Go. Below is a list of key projects included:
 
 ### 1. Kelly Criterion Bet Sizing Program
-   - **Description**: A Goland implementation of the Kelly Criterion, helping users calculate the optimal betting size based on win probability, risk, and reward. It includes Monte Carlo simulations to visualize risk/reward scenarios.
+   - **Description**: A Go implementation of the Kelly Criterion, helping users calculate the optimal betting size based on win probability, risk, and reward. It includes Monte Carlo simulations to visualize risk/reward scenarios.
    - **Key Features**:
      - Calculates optimal bet size using the Kelly Criterion.
      - Includes Monte Carlo simulation for scenario analysis.
