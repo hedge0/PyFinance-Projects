@@ -38,7 +38,7 @@ If you have a 60% probability of winning, will gain 1.5 times your bet on a win,
 1. Make sure you have **Go** installed on your system. You can download it from [https://golang.org/dl/](https://golang.org/dl/).
 2. Clone the repository or download the script file:
 
-`git clone https://github.com/your-repo/kelly-criterion-bet-sizing.git`
+`git clone https://github.com/hedge0/PyFinance-Projects.git`
 
 3. Navigate to the directory and run the program:
 
