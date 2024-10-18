@@ -59,7 +59,7 @@ You can install these libraries by running the following command:
 
 2. Run the program:
 
-`python your_script.py`
+`python spreads.py`
 
 3. The program will output a candlestick chart of the spread between the two chosen securities, showing the following:
    - **Candles**: Represent the spread over time.
