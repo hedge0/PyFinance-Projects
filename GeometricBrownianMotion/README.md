@@ -1,3 +1,0 @@
-This program is an adaption of a monte carlo simulation (adding drift as a component), and will run a simulation for future possible security prices and analyze the results. In the analysis, it lays out a normal distribution of option strikes to sell at, as well as the respective values of those options. You must manually enter the ticker for the test to run on, as well as the strike date.
-
-![alt text](https://github.com/hedge0/PyFinance-Projects/blob/main/GeometricBrownianMotion/images/gbm.PNG?raw=true)
