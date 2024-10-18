@@ -44,7 +44,6 @@ If you have a 60% probability of winning, will gain 1.5 times your bet on a win,
 
 `cd kelly-criterion-bet-sizing go run main.go`
 
-
 ## Usage
 
 1. When running the program, you will be prompted to input the following values:
