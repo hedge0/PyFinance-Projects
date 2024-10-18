@@ -1,1 +1,0 @@
-This program simulates the efficient frontier for a basket of tickers, and then returns the portfolio with the highest sharpe ratio. You must specify the tickers, number of years for the backtest, and number of simulation runs.
