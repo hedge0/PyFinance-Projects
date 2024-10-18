@@ -41,7 +41,7 @@ The neural network architecture used for this project is simple yet effective fo
 3. **Run the Program**:
     - After preparing your dataset, you can run the program using:
     ```
-    python your_script.py
+    python model.py
     ```
 
 ## Usage
